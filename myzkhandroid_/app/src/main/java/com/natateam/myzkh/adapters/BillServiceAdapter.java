@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.natateam.myzkh.AppUtils;
 import com.natateam.myzkh.R;
+import com.natateam.myzkh.ZkhApp;
 import com.natateam.myzkh.dbmodel.Bill;
 import com.natateam.myzkh.dbmodel.BillService;
 import com.natateam.myzkh.managers.DbManager;
@@ -27,6 +29,7 @@ import io.realm.RealmResults;
 public class BillServiceAdapter extends RecyclerView.Adapter<BillServiceAdapter.ViewHolder> {
     private RealmResults <BillService> mDataset;
     private View.OnClickListener listener;
+    private boolean isForAdd;
 
 
     // Provide a reference to the views for each data item
@@ -35,7 +38,7 @@ public class BillServiceAdapter extends RecyclerView.Adapter<BillServiceAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public View mainView;
-        public TextView txtName,txtDept,txtAllDept;
+        public TextView txtName,txtDept,txtAllDept,txtServiceId;
         public ImageView imgIcon;
 
 
@@ -45,14 +48,16 @@ public class BillServiceAdapter extends RecyclerView.Adapter<BillServiceAdapter.
             txtName=(TextView)v.findViewById(R.id.txtName);
             txtDept=(TextView)v.findViewById(R.id.txtDept);
             txtAllDept=(TextView)v.findViewById(R.id.txtAllDept);
+            txtServiceId=(TextView)v.findViewById(R.id.serviceIdtext);
             imgIcon=(ImageView)v.findViewById(R.id.imgLogo);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public BillServiceAdapter(RealmResults<BillService> items,View.OnClickListener listener) {
+    public BillServiceAdapter(RealmResults<BillService> items,View.OnClickListener listener,boolean isForAdd) {
         mDataset = items;
         this.listener=listener;
+        this.isForAdd=isForAdd;
 
     }
 
@@ -76,6 +81,7 @@ public class BillServiceAdapter extends RecyclerView.Adapter<BillServiceAdapter.
         //holder.mTextView.setText(mDataset.get());
         final BillService item = mDataset.get(position);
         holder.txtName.setText(item.getName());
+        holder.txtServiceId.setText(Integer.toString(item.getService_id()));
         Bill bill = DbManager.getInstanse().getBillByBillService(item.getService_id());
         holder.mainView.setOnClickListener(listener);
         switch (item.getService_id()){
@@ -117,8 +123,17 @@ public class BillServiceAdapter extends RecyclerView.Adapter<BillServiceAdapter.
             }
 
         }
-        if (bill!=null){
-            holder.txtDept.setText(bill.getDept()+"р.");
+        if (!isForAdd) {
+            if (bill != null) {
+                int color= AppUtils.getColorForDept(bill.getDept());
+                holder.txtDept.setTextColor(color);
+                holder.txtDept.setText(bill.getDept() + " р.");
+                holder.txtDept.setVisibility(View.VISIBLE);
+                holder.txtAllDept.setVisibility(View.VISIBLE);
+            } else {
+                holder.txtDept.setVisibility(View.GONE);
+                holder.txtAllDept.setVisibility(View.GONE);
+            }
         }else {
             holder.txtDept.setVisibility(View.GONE);
             holder.txtAllDept.setVisibility(View.GONE);

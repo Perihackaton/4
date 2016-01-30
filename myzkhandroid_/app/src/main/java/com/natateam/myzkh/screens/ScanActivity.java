@@ -1,6 +1,7 @@
 package com.natateam.myzkh.screens;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -48,8 +49,14 @@ public class ScanActivity extends Activity implements ZBarScannerView.ResultHand
         // Do something with the result here
         ZkhApp.getInstanse().showToast(rawResult.getContents());
         Log.v("qrcode", rawResult.getContents()); // Prints scan results
-        Log.v("qrcode", rawResult.getBarcodeFormat().getName()); // Prints the scan format (qrcode, pdf417 etc.)
+        Log.v("qrcode", rawResult.getBarcodeFormat().getName());
+        // Prints the scan format (qrcode, pdf417 etc.)
         // If you would like to resume scanning, call this method below:
         mScannerView.resumeCameraPreview(this);
+        Intent intent= new Intent();
+        intent.putExtra("code",rawResult.getContents());
+        setResult(RESULT_OK,intent);
+        finish();
+
     }
 }

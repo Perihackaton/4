@@ -14,7 +14,7 @@
 
     </style>
     <style name="button">
-        <item name="android:textColor">@color/btn_text</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="NavigationDrawerStyle">

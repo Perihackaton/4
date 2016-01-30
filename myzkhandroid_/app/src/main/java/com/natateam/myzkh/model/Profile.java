@@ -12,4 +12,6 @@ public class Profile  {
     public String house;
     public String corpse;
     public String flat;
+
+
 }

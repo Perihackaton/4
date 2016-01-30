@@ -1,5 +1,6 @@
 package com.natateam.myzkh.screens;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -9,13 +10,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.natateam.myzkh.BaseActivity;
 import com.natateam.myzkh.R;
+import com.natateam.myzkh.fragments.BillFragment;
 import com.natateam.myzkh.fragments.MainFragment;
+import com.natateam.myzkh.fragments.ProfileFragment;
+import com.natateam.myzkh.fragments.ServicesFragment;
 import com.natateam.myzkh.fragments.SettFragment;
 import com.natateam.myzkh.managers.SharedManager;
 import com.natateam.myzkh.model.ActivityMediator;
@@ -29,6 +34,8 @@ public class MainActivity extends BaseActivity {
     TextView txtTitle;
     LinearLayout mToolbarLayout;
     ImageView imgMenu;
+    FrameLayout layoutTop;
+    ImageView imgTop;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +44,8 @@ public class MainActivity extends BaseActivity {
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         mToolbarLayout = (LinearLayout) toolbar.findViewById(R.id.toolbar_view);
         txtTitle=(TextView)mToolbarLayout.findViewById(R.id.txtTitle);
+        layoutTop=(FrameLayout)findViewById(R.id.layoutTop);
+        imgTop=(ImageView)findViewById(R.id.imgTop);
         /*TextView toolbarTitle=(TextView)mToolbarLayout.findViewById(R.id.txtTitle);
         toolbarTitle.setTypeface(CurierApp.getInstanse().getSegoeScript());
         toolbar.addView(mToolbarLayout);*/
@@ -47,6 +56,7 @@ public class MainActivity extends BaseActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 if (!menuItem.isChecked()) {
                     menuItem.setChecked(true);
+                    SharedManager.getInstase().setIsNeedAddBill(false);
                     switch (menuItem.getItemId()) {
                         case R.id.drawer_main:
                             setFragmentByTag(MainFragment.TAG, R.id.frag_content, false);
@@ -71,7 +81,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                txtName.setText(SharedManager.getInstase().getProfile().fio);
+                //txtName.setText(SharedManager.getInstase().getProfile().fio);
             }
 
             @Override
@@ -109,9 +119,31 @@ public class MainActivity extends BaseActivity {
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         mToolbarLayout = (LinearLayout) toolbar.findViewById(R.id.toolbar_view);
         txtTitle=(TextView)mToolbarLayout.findViewById(R.id.txtTitle);
+        imgTop=(ImageView)findViewById(R.id.imgTop);
+        layoutTop=(FrameLayout)findViewById(R.id.layoutTop);
         if (tag.equals(MainFragment.TAG)){
+
             txtTitle.setText(getString(R.string.main_title));
+            setTopImage(R.drawable.main_icon);
+        }else if (tag.equals(SettFragment.TAG)){
+            txtTitle.setText(getString(R.string.sett_title));
+            setTopImage(R.drawable.sett_icon);
+        }else if (tag.equals(ProfileFragment.TAG)){
+            txtTitle.setText(getString(R.string.profile_title));
+            setTopImage(R.drawable.sett_icon);
+        }else if (tag.equals(ServicesFragment.TAG)){
+            txtTitle.setText(getString(R.string.add_title));
+            setTopImage(R.drawable.sett_icon);
         }
+    }
+
+    public void setTitle(String text){
+        txtTitle.setText(text);
+    }
+
+    public void setTopImage(int drawable){
+        layoutTop.setVisibility(View.VISIBLE);
+        imgTop.setImageResource(drawable);
     }
 
     @Override
@@ -121,5 +153,24 @@ public class MainActivity extends BaseActivity {
             finish();
             activityMediator.showAuth();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mCurrentVisibleFragment.equals(BillFragment.TAG)){
+            BillFragment billFragment=(BillFragment)getSupportFragmentManager().findFragmentByTag(BillFragment.TAG);
+            //if (data.getAction().contains("code")) {
+                billFragment.setBill(data.getStringExtra("code"));
+            //}
+        }
+    }
+
+
+
+    public void showScan(){
+        Intent intent = new Intent(this, ScanActivity.class);
+        startActivityForResult(intent, 1);
+        //activityMediator.showScan();
     }
 }

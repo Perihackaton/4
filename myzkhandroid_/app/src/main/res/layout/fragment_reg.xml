@@ -10,18 +10,20 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edittextshape"
+        android:background="@drawable/edittextprofile"
         style="@style/myedittext"
         android:padding="10dp"
         android:id="@+id/editfio"
         android:layout_marginBottom="15dp"
-        android:hint="@string/fio_hint"/>
+        android:hint="@string/fio_hint"
+        android:text="Карапац Наталия Александровна"
+        android:textSize="16sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/edittextshape"
+        android:background="@drawable/edittextprofile"
         android:layout_marginBottom="15dp">
      <TextView
          android:layout_width="wrap_content"
@@ -36,28 +38,37 @@
         style="@style/myedittext"
         android:padding="10dp"
         android:id="@+id/editphone"
+        android:inputType="number"
 
-        android:hint="@string/phone_hint"/>
+        android:hint="@string/phone_hint"
+        android:text="9640040554"
+        android:textSize="16sp"/>
     </LinearLayout>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edittextshape"
+        android:background="@drawable/edittextprofile"
         style="@style/myedittext"
         android:padding="10dp"
         android:id="@+id/editPass"
         android:layout_marginBottom="20dp"
-        android:hint="@string/pass_hint"/>
+        android:hint="@string/pass_hint"
+        android:inputType="textPassword"
+        android:text="qwerty"
+        android:textSize="16sp"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edittextshape"
+        android:background="@drawable/edittextprofile"
         style="@style/myedittext"
         android:padding="10dp"
         android:id="@+id/editpassrepeat"
         android:layout_marginBottom="20dp"
-        android:hint="@string/pass_repeat_hint"/>
+        android:hint="@string/pass_repeat_hint"
+        android:inputType="textPassword"
+        android:text="qwerty"
+        android:textSize="16sp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,12 +85,14 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edittextshape"
+        android:background="@drawable/edittextprofile"
         style="@style/myedittext"
         android:padding="10dp"
         android:id="@+id/editcode"
         android:layout_marginBottom="40dp"
         android:hint="@string/code"
+        android:textSize="16sp"
+
         />
     </LinearLayout>
 
@@ -93,7 +106,7 @@
         android:background="@drawable/btnshapereg"
         android:textSize="20sp"
         android:layout_marginBottom="20dp"
-        android:drawableRight="@drawable/arrow_yellow"
+        android:drawableRight="@drawable/arrow_white"
         />
 </LinearLayout>
 </ScrollView>

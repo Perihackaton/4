@@ -3,6 +3,7 @@ package com.natateam.myzkh.managers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 
 import com.natateam.myzkh.ZkhApp;
 import com.natateam.myzkh.model.Profile;
@@ -24,6 +25,8 @@ public class SharedManager {
     public static final String FLAT="FLAT";
     public static final String CITY="CITY";
     public static final String IS_DB_TEST_EMPTY="IS_DB_TEST_EMPTY";
+    public static final String IS_NEED_ADD_BILL="IS_NEED_ADD_BILL";
+    public static final String CURRENT_SERVICE_ID="CURRENT_SERVICE_ID";
 
 
 
@@ -56,7 +59,7 @@ public class SharedManager {
     }
 
     public String getCORPSE() {
-        return sharedPreferences.getString(TOKEN,null);
+        return sharedPreferences.getString(CORPSE,null);
     }
 
     public  String getCity() {
@@ -94,8 +97,6 @@ public class SharedManager {
     public void setHouse(String fio){
         editor.putString(HOUSE,fio);
         editor.commit();
-
-
     }
 
     public void setFlat(String fio){
@@ -114,9 +115,9 @@ public class SharedManager {
         profile.corpse=getCORPSE();
         profile.fio=getFIO();
         profile.token=getTOKEN();
-        profile.street=getSTREET();
-        profile.corpse=getCORPSE();
+        profile.street=getSTREET();;
         profile.flat=getFLAT();
+        profile.house=getHouse();
         return profile;
     }
 
@@ -127,6 +128,34 @@ public class SharedManager {
     public void setIsDbTestEmpty(boolean isEmpty){
         editor.putBoolean(IS_DB_TEST_EMPTY,isEmpty);
         editor.commit();
+    }
+
+    public boolean isNeedAddBill(){
+        return  sharedPreferences.getBoolean(IS_NEED_ADD_BILL,false);
+
+    }
+    public void setIsNeedAddBill(boolean isNeed){
+        editor.putBoolean(IS_NEED_ADD_BILL,isNeed);
+        editor.commit();
+    }
+
+    public boolean isProfileFull(){
+        Profile profile=getProfile();
+        if (TextUtils.isEmpty(profile.city)||TextUtils.isEmpty(profile.street)||
+                TextUtils.isEmpty(profile.house)){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public void setCurrentServiceId(int id){
+        editor.putInt(CURRENT_SERVICE_ID,id);
+        editor.commit();
+    }
+
+    public int getCurrentServiceId(){
+        return sharedPreferences.getInt(CURRENT_SERVICE_ID,-1);
     }
 
 

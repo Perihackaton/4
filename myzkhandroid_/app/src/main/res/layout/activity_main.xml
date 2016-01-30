@@ -19,6 +19,20 @@
         layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/triangle_top"
+        android:id="@+id/layoutTop"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_bill_1"
+            android:layout_gravity="center"
+            android:id="@+id/imgTop"
+            />
+    </FrameLayout>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,5 +1,6 @@
 package com.natateam.myzkh;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,7 +8,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 
 import com.natateam.myzkh.fragments.BaseFragment;
+import com.natateam.myzkh.fragments.BillFragment;
 import com.natateam.myzkh.fragments.MainFragment;
+import com.natateam.myzkh.fragments.ProfileFragment;
+import com.natateam.myzkh.fragments.ServicesFragment;
+import com.natateam.myzkh.fragments.SettFragment;
 import com.natateam.myzkh.screens.AuthActivity;
 
 /**
@@ -33,7 +38,7 @@ public class BaseActivity extends ActionBarActivity {
                 } else {
                     if (count > 0) {
                         mCurrentVisibleFragment = fm.getBackStackEntryAt(count - 1).getName();
-                        setFragmentByTag(mCurrentVisibleFragment, R.id.frag_content, true);
+                        setFragmentByTag(mCurrentVisibleFragment, R.id.frag_content, false);
                     }
                 }
             }
@@ -50,7 +55,7 @@ public class BaseActivity extends ActionBarActivity {
         if (savedState == null)
         {
             if (this instanceof AuthActivity) {
-                setFragmentByTag(AuthFragment.class.getName(), R.id.frag_content, true);
+                setFragmentByTag(AuthFragment.class.getName(), R.id.frag_content, false);
             }else {
                 setFragmentByTag(MainFragment.class.getName(), R.id.frag_content, false);
             }
@@ -65,7 +70,7 @@ public class BaseActivity extends ActionBarActivity {
                 return;
             }
             if (this instanceof AuthActivity) {
-                setFragmentByTag(AuthFragment.class.getName(), R.id.frag_content, true);
+                setFragmentByTag(AuthFragment.class.getName(), R.id.frag_content, false);
             }else {
                 setFragmentByTag(MainFragment.class.getName(), R.id.frag_content, false);
             }
@@ -131,7 +136,21 @@ public class BaseActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         mWasBackPressed=true;
-        super.onBackPressed();
+        boolean isNeedFinish=false;
+        if (mCurrentVisibleFragment.equals(MainFragment.TAG)||
+                mCurrentVisibleFragment.equals(SettFragment.TAG)){
+            isNeedFinish=true;
+        }
+        if (isNeedFinish){
+            super.onBackPressed();
+            return;
+        }
+        if (mPrevVisibleFragment.equals(BillFragment.TAG)){
+            mPrevVisibleFragment=MainFragment.TAG;
+        }
+        if (mPrevVisibleFragment!=null){
+            setFragmentByTag(mPrevVisibleFragment,R.id.frag_content,false);
+        }
     }
 
     public void setTitleByTag(String tag){
@@ -154,5 +173,10 @@ public class BaseActivity extends ActionBarActivity {
                     mPrevVisibleFragment = mCurrentVisibleFragment;
             }
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

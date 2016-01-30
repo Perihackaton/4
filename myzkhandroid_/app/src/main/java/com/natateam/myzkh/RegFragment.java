@@ -53,7 +53,9 @@ public class RegFragment extends BaseFragment {
                     layoutCode.setVisibility(View.VISIBLE);
                     layoutCode.startAnimation(AnimationUtils.getFadeInAnimation());
                 }else {
+                    String fio=editFio.getText().toString();
                     SharedManager.getInstase().setToken("token");
+                    SharedManager.getInstase().setFio(fio);
                     activity.showMain();
                 }
             }

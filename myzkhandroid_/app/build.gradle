@@ -31,4 +31,7 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.0.+'
     compile 'me.dm7.barcodescanner:zbar:1.8.4'
     compile 'io.realm:realm-android:0.87.4'
+    compile 'com.mcxiaoke.volley:library:1.0.+@aar'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.liulishuo.magicprogresswidget:library:1.0.7'
 }

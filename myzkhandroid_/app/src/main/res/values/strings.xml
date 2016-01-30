@@ -39,4 +39,23 @@
     <string name="corpse_hint">Корпус</string>
     <string name="flat_hint">Квартира</string>
     <string name="adress">Адрес</string>
+    <string name="save_btn">Сохранить</string>
+    <string name="profile_save">Профиль успешно сохранен</string>
+    <string name="enter_name">Введите ФИО</string>
+    <string name="enter_city">Введите город</string>
+    <string name="enter_street">Введите улицу</string>
+    <string name="enter_house">Введите номер дома</string>
+    <string name="bill_hint">Лицевой счет</string>
+    <string name="qr_scan">Сканировать \n QR-code</string>
+    <string name="score">Счетчик</string>
+    <string name="enter_bill">Лицевой счет должен состоять не менее чем из 10 цифр</string>
+    <string name="bill_add">Лицевой счет успешно добавлен</string>
+    <string name="bill_count">Показания счетчика</string>
+    <string name="current_tariff">Текущий тариф:</string>
+    <string name="dept_end">Задолженность на конец месяца:</string>
+    <string name="dept_begin">Задолженность на начало месяца:</string>
+    <string name="enrolled">Начислено:</string>
+    <string name="paied">Оплачено:</string>
+    <string name="check_internet_toast">Проверьте интернет-соединение</string>
+    <string name="error_string">Ошибка</string>
 </resources>

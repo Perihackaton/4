@@ -1,5 +1,6 @@
 package com.natateam.myzkh.model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -44,7 +45,7 @@ public class ActivityMediator extends ContextMediator {
     public void showScan(){
         Intent intent= new Intent(getContext(),ScanActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getContext().startActivity(intent);
+        ((Activity)getContext()).startActivityForResult(intent, ((Activity) getContext()).RESULT_OK);
     }
 
 

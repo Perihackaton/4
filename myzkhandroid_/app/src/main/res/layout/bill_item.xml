@@ -15,12 +15,18 @@
     android:layout_marginLeft="20dp"
     android:layout_marginTop="10dp"
     >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/serviceIdtext"
+        android:visibility="gone"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="1"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:gravity="center">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,6 +49,7 @@
           android:text="@string/all_dept"
           android:textColor="@color/colorPrimary"
           android:paddingRight="10dp"
+          android:textSize="12sp"
           />
        <TextView
            android:layout_width="wrap_content"
@@ -50,6 +57,9 @@
            android:id="@+id/txtDept"
            android:textColor="@color/color_dept_first"
            android:text="10000 р"
+           android:textSize="12sp"
+           android:textStyle="bold"
+
            />
 
     </LinearLayout>

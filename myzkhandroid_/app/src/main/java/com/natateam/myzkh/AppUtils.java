@@ -1,6 +1,10 @@
 package com.natateam.myzkh;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.text.Editable;
+
+import com.natateam.myzkh.dbmodel.BillService;
 
 /**
  * Created by macbook on 22/06/ 15.
@@ -102,5 +106,59 @@ public class AppUtils {
         }
 
 
+    }
+
+    public static int getColorForDept(double dept){
+        if (dept>5000){
+           return ZkhApp.getInstanse().getResources().getColor(R.color.color_dept_first);
+        }else if (dept>3000){
+            return ZkhApp.getInstanse().getResources().getColor(R.color.color_dept_second);
+        }else {
+            return ZkhApp.getInstanse().getResources().getColor(R.color.color_dept_third);
+        }
+    }
+
+
+    public static  int getServiceDrawable(int service_id) {
+        Context context=ZkhApp.getInstanse();
+        switch (service_id) {
+            case BillService.BILL_1: {
+                return R.drawable.icon_bill_1;
+
+            }
+            case BillService.BILL_2: {
+                return R.drawable.icon_bill_2;
+
+            }
+            case BillService.BILL_3: {
+                return R.drawable.icon_bill_3;
+
+            }
+            case BillService.BILL_4: {
+                return R.drawable.icon_bill_4;
+
+            }
+            case BillService.BILL_5: {
+                return R.drawable.icon_bill_5;
+
+            }
+            case BillService.BILL_6: {
+                return R.drawable.icon_bill_6;
+
+            }
+            case BillService.BILL_7: {
+                return R.drawable.icon_bill_7;
+
+            }
+            case BillService.BILL_8: {
+                return R.drawable.icon_bill_8;
+
+            }
+            case BillService.BILL_9: {
+                return R.drawable.icon_bill_9;
+            }
+
+        }
+        return R.drawable.icon_bill_1;
     }
 }

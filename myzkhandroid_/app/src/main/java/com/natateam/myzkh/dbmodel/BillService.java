@@ -8,6 +8,12 @@ import io.realm.RealmObject;
 public class BillService extends RealmObject {
     private int service_id;
     private String name;
+
+    public void setTarrif(double tarrif) {
+        this.tarrif = tarrif;
+    }
+
+    private double tarrif=18.2;
     public static final int BILL_1=1;
     public static final int BILL_2=2;
     public static final int BILL_3=3;
@@ -36,5 +42,7 @@ public class BillService extends RealmObject {
         return name;
     }
 
-
+    public double getTarrif() {
+        return tarrif;
+    }
 }

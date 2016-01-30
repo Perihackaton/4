@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/edittextshape"
+        android:background="@drawable/edittextprofile"
         android:layout_marginBottom="15dp">
         <TextView
             android:layout_width="wrap_content"
@@ -27,30 +27,35 @@
             style="@style/myedittext"
             android:padding="10dp"
             android:id="@+id/editphone"
-
-            android:hint="@string/phone_hint"/>
+            android:inputType="number"
+            android:hint="@string/phone_hint"
+            android:text="9640040554"
+            android:textSize="16sp"
+            />
     </LinearLayout>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edittextshape"
+        android:background="@drawable/edittextprofile"
         style="@style/myedittext"
         android:padding="10dp"
         android:id="@+id/editPass"
         android:layout_marginBottom="20dp"
-        android:hint="@string/pass_hint"/>
+        android:hint="@string/pass_hint"
+        android:text="qwerty"
+        android:inputType="textPassword"
+        android:textSize="16sp"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        style="@style/button"
         android:id="@+id/btnEnter"
         android:text="@string/enter"
-        style="@style/button"
+        android:background="@drawable/btnshapereg"
         android:textSize="20sp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/btnshapereg"
-        android:drawableRight="@drawable/arrow_yellow"
+        android:drawableRight="@drawable/arrow_white"
 
         />
     <Button
@@ -62,7 +67,7 @@
         android:background="@drawable/btnshapereg"
         android:textSize="20sp"
         android:layout_marginBottom="20dp"
-        android:drawableRight="@drawable/arrow_yellow"
+        android:drawableRight="@drawable/arrow_white"
 
         />
 
