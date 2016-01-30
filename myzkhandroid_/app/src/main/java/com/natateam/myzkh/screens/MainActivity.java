@@ -19,6 +19,7 @@ import com.natateam.myzkh.BaseActivity;
 import com.natateam.myzkh.R;
 import com.natateam.myzkh.fragments.BillFragment;
 import com.natateam.myzkh.fragments.MainFragment;
+import com.natateam.myzkh.fragments.NewsFragment;
 import com.natateam.myzkh.fragments.ProfileFragment;
 import com.natateam.myzkh.fragments.ServicesFragment;
 import com.natateam.myzkh.fragments.SettFragment;
@@ -63,6 +64,9 @@ public class MainActivity extends BaseActivity {
                             break;
                         case R.id.drawer_sett:
                             setFragmentByTag(SettFragment.TAG, R.id.frag_content, false);
+                            break;
+                        case R.id.drawer_info:
+                            setFragmentByTag(NewsFragment.TAG, R.id.frag_content, false);
                             break;
 
                     }
@@ -122,7 +126,6 @@ public class MainActivity extends BaseActivity {
         imgTop=(ImageView)findViewById(R.id.imgTop);
         layoutTop=(FrameLayout)findViewById(R.id.layoutTop);
         if (tag.equals(MainFragment.TAG)){
-
             txtTitle.setText(getString(R.string.main_title));
             setTopImage(R.drawable.main_icon);
         }else if (tag.equals(SettFragment.TAG)){
@@ -134,7 +137,11 @@ public class MainActivity extends BaseActivity {
         }else if (tag.equals(ServicesFragment.TAG)){
             txtTitle.setText(getString(R.string.add_title));
             setTopImage(R.drawable.sett_icon);
+        }else if (tag.equals(NewsFragment.TAG)){
+            txtTitle.setText(getString(R.string.info_title));
+            setTopImage(R.drawable.info_icon);
         }
+
     }
 
     public void setTitle(String text){
@@ -158,11 +165,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (mCurrentVisibleFragment.equals(BillFragment.TAG)){
-            BillFragment billFragment=(BillFragment)getSupportFragmentManager().findFragmentByTag(BillFragment.TAG);
-            //if (data.getAction().contains("code")) {
+        if (resultCode==RESULT_OK) {
+            if (mCurrentVisibleFragment.equals(BillFragment.TAG)) {
+                BillFragment billFragment = (BillFragment) getSupportFragmentManager().findFragmentByTag(BillFragment.TAG);
+                //if (data.getAction().contains("code")) {
                 billFragment.setBill(data.getStringExtra("code"));
-            //}
+                //}
+            }
         }
     }
 

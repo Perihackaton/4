@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">myzkh</string>
+    <string name="app_name">ЖКХакер</string>
     <string name="phone_hint">Номер телефона</string>
     <string name="pass_hint">Пароль</string>
     <string name="enter">Вход</string>
@@ -58,4 +58,10 @@
     <string name="paied">Оплачено:</string>
     <string name="check_internet_toast">Проверьте интернет-соединение</string>
     <string name="error_string">Ошибка</string>
+    <string name="info_title">Информация</string>
+    <string name="api_host">http://o40714hu.bget.ru/cp/api/</string>
+    <string name="progress_dialog_text">Обработка запроса</string>
+    <string name="enter_pass">Введите пароль</string>
+    <string name="repeat_pass">Повторите пароль</string>
+    <string name="pass_not_true">Пароли не совпадают</string>
 </resources>

@@ -34,4 +34,5 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.+@aar'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.liulishuo.magicprogresswidget:library:1.0.7'
+    compile 'com.google.android.gms:play-services-location:7.8.0'
 }

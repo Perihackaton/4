@@ -42,7 +42,7 @@
         android:id="@+id/editPass"
         android:layout_marginBottom="20dp"
         android:hint="@string/pass_hint"
-        android:text="qwerty"
+        android:text="qwerty1Q"
         android:inputType="textPassword"
         android:textSize="16sp"/>
 

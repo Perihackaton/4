@@ -31,7 +31,7 @@
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:text="@string/adress"
-        android:drawableLeft="@drawable/icon_adress"
+        android:drawableLeft="@drawable/adress_icon"
         android:drawablePadding="10dp"
         android:layout_marginBottom="15dp"/>
     <EditText

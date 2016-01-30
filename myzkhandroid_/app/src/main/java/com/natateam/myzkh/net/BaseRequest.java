@@ -67,7 +67,7 @@ public abstract class BaseRequest extends Request<String> {
     }
 
     public BaseRequest(int method, String apiMethod, Listener listener) {
-        super(method, SERVER_URL + apiMethod, new Response.ErrorListener() {
+        super(method, ZkhApp.getInstanse().getString(R.string.api_host) + apiMethod, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Intent intent = new Intent(REQUEST_ERROR);
@@ -232,8 +232,9 @@ public abstract class BaseRequest extends Request<String> {
 
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
-        mHeaders=super.getHeaders();
-        mHeaders.put("Token", SharedManager.getInstase().getTOKEN());
+        if ( SharedManager.getInstase().getTOKEN()!=null) {
+            mHeaders.put("Token", SharedManager.getInstase().getTOKEN());
+        }
         return mHeaders;
     }
 }

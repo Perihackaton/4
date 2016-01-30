@@ -45,6 +45,12 @@ public class ScanActivity extends Activity implements ZBarScannerView.ResultHand
     }
 
     @Override
+    protected void onDestroy() {
+        mScannerView.stopCamera();
+        super.onDestroy();
+    }
+
+    @Override
     public void handleResult(Result rawResult) {
         // Do something with the result here
         ZkhApp.getInstanse().showToast(rawResult.getContents());
