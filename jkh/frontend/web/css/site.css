@@ -1,0 +1,219 @@
+html,
+body {
+    background-color: #FBFBFB;
+    height: 100%;
+}
+
+.wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
+}
+
+.wrap > .container {
+    padding: 70px 15px 20px;
+}
+
+.footer {
+    height: 60px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: transparent;
+}
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+}
+
+.not-set {
+    color: #f9de19;
+    font-style: italic;
+}
+
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 5px;
+}
+
+a.asc:after {
+    content: /*"\e113"*/ "\e151";
+}
+
+a.desc:after {
+    content: /*"\e114"*/ "\e152";
+}
+
+.sort-numerical a.asc:after {
+    content: "\e153";
+}
+
+.sort-numerical a.desc:after {
+    content: "\e154";
+}
+
+.sort-ordinal a.asc:after {
+    content: "\e155";
+}
+
+.sort-ordinal a.desc:after {
+    content: "\e156";
+}
+
+.grid-view th {
+    white-space: nowrap;
+}
+
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+.navbar-inverse {
+    background-color: #f9de19;
+    border-color: #f9de19;
+    color: #ffffff;
+}
+
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav > li > a {
+    color: #ffffff;
+}
+
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-nav > li > a:hover {
+    text-decoration: underline;
+}
+
+.content {
+    padding-top: 30px;
+    position: relative;
+    left: -30px;
+}
+
+#yandexMap {
+    width: 100%;
+    height: 450px;
+}
+
+.obj-item,
+.cat-item {
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+.list-view {
+    background-color: #ffffff;
+    padding-top: 10px;
+    border-radius: 3px;
+}
+.list-view .back-button {
+    background: url(/img/back.png) no-repeat;
+    background-size: 30px 30px;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: -5px;
+    margin-top: 5px;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.obj-item:hover {
+    color: #D03849;
+}
+
+.ajax-loader {
+    background: url("/ajax-loader.gif") no-repeat;
+    width: 66px;
+    height: 66px;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    top: 45%;
+}
+
+.icon-desc {
+    padding: 0;
+    margin: 0;
+}
+
+.icon-desc .icon-desc-text {
+    position: relative;
+    top: 7px;
+}
+
+span.pict {
+    width: 55px;
+    height: 55px;
+    display: inline-block;
+    margin: 5px;
+    border-radius: 3px;
+    padding: 30px;
+}
+
+span.pict.small {
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    background-size: 35px 35px;
+}
+
+.inv {
+    background: url("/img/inv.png") no-repeat center;
+}
+
+.eye {
+    background: url("/img/eye.png") no-repeat center;
+}
+
+.ear {
+    background: url("/img/ear.png") no-repeat center;
+}
+
+.pict.color1 {
+    background-color: #00bd00;
+}
+
+.pict.color2 {
+    background-color: #FFD946;
+}
+
+.pict.color3 {
+    background-color: #f9de19;
+}
+
+.object {
+    padding-top: 20px;
+}
+
+.object #yandexMap {
+    width: 400px;
+    height: 500px;
+}
+
