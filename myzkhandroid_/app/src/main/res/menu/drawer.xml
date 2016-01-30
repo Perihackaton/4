@@ -1,0 +1,35 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_main"
+            android:checked="true"
+            android:icon="@drawable/main_icon"
+            android:title="@string/menu_main"/>
+
+        <item
+            android:id="@+id/drawer_order"
+            android:checked="true"
+            android:icon="@drawable/order_ic"
+            android:title="@string/menu_order"/>
+
+        <item
+            android:id="@+id/drawer_bonus"
+            android:checked="true"
+            android:icon="@drawable/bonus_icon"
+            android:title="@string/menu_bonus"/>
+
+        <item
+            android:id="@+id/drawer_info"
+            android:checked="true"
+            android:icon="@drawable/info_icon"
+            android:title="@string/menu_info"/>
+        <item
+            android:id="@+id/drawer_sett"
+            android:checked="true"
+            android:icon="@drawable/sett_icon"
+            android:title="@string/menu_sett"/>
+
+    </group>
+</menu>

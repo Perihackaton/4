@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">myzkh</string>
+    <string name="phone_hint">Номер телефона</string>
+    <string name="pass_hint">Пароль</string>
+    <string name="enter">Вход</string>
+    <string name="registration">Регистрация</string>
+    <string name="fio_hint">ФИО</string>
+    <string name="pass_repeat_hint">Повторите пароль</string>
+    <string name="code">Код подтверждения</string>
+    <string name="code_text">На ваш телефон выслано СМС с кодом подтверждения</string>
+    <string-array name="zkh_list">
+        <item>Газ</item>
+        <item>Вода холодная</item>
+        <item>Вода горячая</item>
+        <item>Электроэнергия</item>
+        <item>Отопление</item>
+        <item>Кап. ремонт</item>
+        <item>ТБО</item>/
+        <item>Канализация</item>/
+        <item>Тех. обслуживание</item>/
+    </string-array>
+    <string name="menu_main">ГЛАВНАЯ</string>
+    <string name="menu_order">ЗАЯВКА</string>
+    <string name="menu_bonus">БОНУСЫ</string>
+    <string name="menu_info">ИНФОРМАЦИЯ</string>
+    <string name="menu_sett">НАСТРОЙКИ</string>
+    <string name="all_dept">Общий долг:</string>
+    <string name="ruble">р.</string>
+    <string name="main_title">Начисления</string>
+    <string name="sett_title">Настройки</string>
+    <string name="profile_title">Профиль</string>
+    <string name="add_title">Добавить лицевой счет</string>
+    <string name="surname_hint">Фамилия</string>
+    <string name="name_hint">И</string>
+    <string name="o_hint">О</string>
+    <string name="city_hint">Город</string>
+    <string name="street_hint">Улица</string>
+    <string name="house_hint">Дом</string>
+    <string name="corpse_hint">Корпус</string>
+    <string name="flat_hint">Квартира</string>
+    <string name="adress">Адрес</string>
+</resources>
