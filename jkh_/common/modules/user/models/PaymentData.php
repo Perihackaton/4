@@ -2,6 +2,7 @@
 
 namespace common\modules\user\models;
 
+use common\modules\services\models\Services;
 use Yii;
 
 /**
@@ -52,5 +53,10 @@ class PaymentData extends \yii\db\ActiveRecord
             'paid' => 'Оплачено',
             'enrolled' => 'Зачислено',
         ];
+    }
+
+    public function getService()
+    {
+        return $this->hasOne(Services::className(), ['id' => 'service_id']);
     }
 }

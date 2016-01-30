@@ -88,25 +88,33 @@ class DefaultController extends Controller
             $user->password = $_POST['password'];
             $user->username = $_POST['fio'];
 
-            if ($user->registerByPhoneNumber($_POST['login'], $_POST['fio'], $_POST['password'])) {
+            $activation_key = $user->registerByPhoneNumber($_POST['login'], $_POST['fio'], $_POST['password']);
+
+            if ($activation_key == -1) {
+                $result = [
+                    'status' => [
+                        'code' => 408,
+                        'message' => "Пользователь с таким номером телефона уже существует",
+                    ]
+                ];
+            } elseif ($activation_key == -2) {
+                    $result = [
+                        'status' => [
+                            'code' => 405,
+                            'message' => 'Введены неверные данные'
+                        ]
+                    ];
+            } else {
                 $result = [
                     'status' => [
                         'code' => 200,
                         'message' => "ОК",
                     ],
                     'data' => [
-                        'activation_key' => $user->activation_key
+                        'activation_key' => $activation_key
                     ]
                 ];
-            } else {
-                $result = [
-                    'status' => [
-                        'code' => 405,
-                        'message' => 'Введены неверные данные'
-                    ]
-                ];
-            };
-
+            }
 
         } else {
             $result = [
@@ -133,6 +141,7 @@ class DefaultController extends Controller
 
             if (!empty($user)) {
                 if ($user->activation_key == $code) {
+                    $user->activated = 1;
                     $tokenGenerator = new GenerateToken();
                     $user->password_reset_token = $tokenGenerator->getToken(128);
                     if ($user->save()) {
@@ -262,7 +271,7 @@ class DefaultController extends Controller
             $result = [
                 'status' => [
                     'code' => 400,
-                    'message' => 'Значение Token не верное'
+                    'message' => 'Значение Token не задано'
                 ]
             ];
         }
@@ -291,17 +300,17 @@ class DefaultController extends Controller
                     'data' => [
                         'profile' => [
                             'fio' => $user->username,
-                            'token' => $user->token,
+                            'token' => $user->password_reset_token,
                         ]
                     ],
                 ];
 
                 if (!empty($user->address)) {
-                    $result['data']['profile']['city'] = $user->address->city;
-                    $result['data']['profile']['street'] = $user->address->street;
-                    $result['data']['profile']['house'] = $user->address->house;
-                    $result['data']['profile']['corpse'] = $user->address->corpse;
-                    $result['data']['profile']['flat'] = $user->address->flat;
+                    $result['data']['profile']['city'] = empty($user->address->city) ? "" : $user->address->city;
+                    $result['data']['profile']['street'] = empty($user->address->street) ? "" : $user->address->street;
+                    $result['data']['profile']['house'] = empty($user->address->house) ? "" : $user->address->house;
+                    $result['data']['profile']['corpse'] = empty($user->address->area) ? "" : $user->address->area;
+                    $result['data']['profile']['flat'] = empty($user->address->flat_number) ? "" : $user->address->flat_number;
                 }
 
                 $personal_accs = $user->getPersonalAccounts();
@@ -326,7 +335,7 @@ class DefaultController extends Controller
             $result = [
                 'status' => [
                     'code' => 400,
-                    'message' => 'Значение Token не верное'
+                    'message' => 'Значение Token не задано'
                 ]
             ];
         }
@@ -407,7 +416,7 @@ class DefaultController extends Controller
             $result = [
                 'status' => [
                     'code' => 400,
-                    'message' => 'Значение Token не верное'
+                    'message' => 'Значение Token не задано'
                 ]
             ];
         }
@@ -491,7 +500,7 @@ class DefaultController extends Controller
             $result = [
                 'status' => [
                     'code' => 400,
-                    'message' => 'Значение Token не верное'
+                    'message' => 'Значение Token не задано'
                 ]
             ];
         }
@@ -566,7 +575,7 @@ class DefaultController extends Controller
             $result = [
                 'status' => [
                     'code' => 400,
-                    'message' => 'Значение Token не верное'
+                    'message' => 'Значение Token не задано'
                 ]
             ];
         }
@@ -576,14 +585,10 @@ class DefaultController extends Controller
 
     public function getToken()
     {
-        $headers = headers_list();
-
         $token = false;
-        foreach ($headers as $header) {
-            if ($token = strstr($header, "Token")) {
-                return $token;
-            }
-        }
+        if (!empty(Yii::$app->request->headers['token'])) {
+            $token = Yii::$app->request->headers['token'];
+        };
 
         return $token;
     }
