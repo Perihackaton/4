@@ -1,6 +1,12 @@
 package com.natateam.myzkh;
 
 import com.android.volley.RequestQueue;
+import com.natateam.myzkh.net.AddBillRequest;
+import com.natateam.myzkh.net.AuthRequest;
+import com.natateam.myzkh.net.Listener;
+import com.natateam.myzkh.net.RegCodeRequest;
+import com.natateam.myzkh.net.RegRequest;
+import com.natateam.myzkh.net.SaveUserRequest;
 
 import java.io.UnsupportedEncodingException;
 
@@ -18,5 +24,27 @@ public class ApiFacade {
     }
     protected RequestQueue getQueue() {
         return ZkhApp.getInstanse().getRequestQueue();
+    }
+
+    public void setAuth(String login,String password,Listener listener){
+        ZkhApp.getInstanse().getRequestQueue().add(new AuthRequest(login,password,listener));
+    }
+
+    public void setReg(String login, String pass,String fio, Listener listener){
+        ZkhApp.getInstanse().getRequestQueue().add(new RegRequest(login,pass,fio,listener));
+    }
+
+    public void setRegBycode(String login, String code, Listener listener){
+        ZkhApp.getInstanse().getRequestQueue().add(new RegCodeRequest(login, code, listener));
+
+    }
+
+    public void saveProfile(String fio,String city, String street,
+                            String house, String corpse, String flat, Listener listener){
+        ZkhApp.getInstanse().getRequestQueue().add(new SaveUserRequest(fio, city, street, house, corpse, flat, listener));
+    }
+
+    public void addBill(String bill,int service_id, Listener listener){
+        ZkhApp.getInstanse().getRequestQueue().add(new AddBillRequest(bill, service_id, listener));
     }
 }

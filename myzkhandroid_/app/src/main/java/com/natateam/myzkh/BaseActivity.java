@@ -1,5 +1,6 @@
 package com.natateam.myzkh;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,11 +23,15 @@ public class BaseActivity extends ActionBarActivity {
 
     protected String mPrevVisibleFragment, mCurrentVisibleFragment;
     boolean mWasBackPressed;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        progressDialog= new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.progress_dialog_text));
+        progressDialog.setCancelable(false);
         final FragmentManager fm = getSupportFragmentManager();
         fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
@@ -38,7 +43,7 @@ public class BaseActivity extends ActionBarActivity {
                 } else {
                     if (count > 0) {
                         mCurrentVisibleFragment = fm.getBackStackEntryAt(count - 1).getName();
-                        setFragmentByTag(mCurrentVisibleFragment, R.id.frag_content, false);
+                        setFragmentByTag(mCurrentVisibleFragment, R.id.frag_content, true);
                     }
                 }
             }
@@ -55,7 +60,7 @@ public class BaseActivity extends ActionBarActivity {
         if (savedState == null)
         {
             if (this instanceof AuthActivity) {
-                setFragmentByTag(AuthFragment.class.getName(), R.id.frag_content, false);
+                setFragmentByTag(AuthFragment.class.getName(), R.id.frag_content,true );
             }else {
                 setFragmentByTag(MainFragment.class.getName(), R.id.frag_content, false);
             }
@@ -70,7 +75,7 @@ public class BaseActivity extends ActionBarActivity {
                 return;
             }
             if (this instanceof AuthActivity) {
-                setFragmentByTag(AuthFragment.class.getName(), R.id.frag_content, false);
+                setFragmentByTag(AuthFragment.class.getName(), R.id.frag_content, true);
             }else {
                 setFragmentByTag(MainFragment.class.getName(), R.id.frag_content, false);
             }
@@ -92,6 +97,7 @@ public class BaseActivity extends ActionBarActivity {
             }
 
             final FragmentTransaction ft = fm.beginTransaction();
+            ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
             fragment = fm.findFragmentByTag(mPrevVisibleFragment);
 
             if (fragment != null)
@@ -137,19 +143,24 @@ public class BaseActivity extends ActionBarActivity {
     public void onBackPressed() {
         mWasBackPressed=true;
         boolean isNeedFinish=false;
-        if (mCurrentVisibleFragment.equals(MainFragment.TAG)||
-                mCurrentVisibleFragment.equals(SettFragment.TAG)){
-            isNeedFinish=true;
-        }
-        if (isNeedFinish){
+        if (this instanceof AuthActivity){
             super.onBackPressed();
-            return;
-        }
-        if (mPrevVisibleFragment.equals(BillFragment.TAG)){
-            mPrevVisibleFragment=MainFragment.TAG;
-        }
-        if (mPrevVisibleFragment!=null){
-            setFragmentByTag(mPrevVisibleFragment,R.id.frag_content,false);
+        }else {
+            if (mCurrentVisibleFragment.equals(MainFragment.TAG) ||
+                    mCurrentVisibleFragment.equals(SettFragment.TAG)) {
+                isNeedFinish = true;
+            }
+            if (isNeedFinish) {
+                super.onBackPressed();
+                return;
+            }
+
+            if (mPrevVisibleFragment != null && mPrevVisibleFragment.equals(BillFragment.TAG)) {
+                mPrevVisibleFragment = MainFragment.TAG;
+            }
+            if (mPrevVisibleFragment != null) {
+                setFragmentByTag(mPrevVisibleFragment, R.id.frag_content, false);
+            }
         }
     }
 
@@ -178,5 +189,31 @@ public class BaseActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void showProgress(String message){
+        if (progressDialog!=null) {
+            progressDialog.setMessage(message);
+            progressDialog.show();
+        }
+    }
+    public void showProgress(){
+        if (progressDialog!=null){
+            progressDialog.setMessage(getString(R.string.progress_dialog_text));
+            if (!progressDialog.isShowing()) {
+                progressDialog.show();
+            }
+        }
+    }
+
+    public void hideProgress(){
+        try {
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+                //progressDialog.hide();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

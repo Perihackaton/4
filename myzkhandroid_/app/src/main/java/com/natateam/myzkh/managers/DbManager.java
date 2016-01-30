@@ -7,6 +7,7 @@ import com.natateam.myzkh.ZkhApp;
 import com.natateam.myzkh.dbmodel.Bill;
 import com.natateam.myzkh.dbmodel.BillHistoryItem;
 import com.natateam.myzkh.dbmodel.BillService;
+import com.natateam.myzkh.dbmodel.NewsItem;
 
 import java.util.Random;
 
@@ -45,6 +46,15 @@ public class DbManager {
                 billService.setName(zkh_list[i]);
                 billService.setService_id(i+1);
             }
+            NewsItem newsItem=realm.createObject(NewsItem.class);
+            newsItem.setTheme("Объявление об отключении воды");
+            newsItem.setText("В ночь с 03 апреля на 04 февраля 2016 г. с 00.00 до 03.00 будет произведено отключение холодного и горячего водоснабжения в связи с ремонтными работами");
+            newsItem.setDate("20.02.2016");
+            newsItem=realm.createObject(NewsItem.class);
+            newsItem.setTheme("СОБСТВЕННИКАМ ЖИЛЬЯ В ДАГЕСТАНЕ ПРОДЛИЛИ СРОКИ ДЛЯ УПЛАТЫ ВЗНОСОВ НА КАПРЕМОНТ ИСТОЧНИК");
+            newsItem.setText("Согласно тексту Закона «О внесении изменений в Закон Республики Дагестан «Об организации проведения капитального ремонта " +
+                    "общего имущества в многоквартирных домах в Республике Дагестан», в документ включено положение о проведении капремонта в подъездах.");
+            newsItem.setDate("25.12.2015");
             realm.commitTransaction();
             SharedManager.getInstase().setIsDbTestEmpty(false);
         }
@@ -89,6 +99,11 @@ public class DbManager {
 
     public RealmResults<BillHistoryItem> getHistoryItemsForBill(String bill){
         RealmQuery<BillHistoryItem> query=realm.where(BillHistoryItem.class).equalTo("bill",bill);
+        return query.findAll();
+    }
+
+    public RealmResults<NewsItem> getAllNews(){
+        RealmQuery<NewsItem> query=realm.where(NewsItem.class);
         return query.findAll();
     }
 

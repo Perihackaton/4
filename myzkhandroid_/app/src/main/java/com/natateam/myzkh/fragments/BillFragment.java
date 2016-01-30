@@ -10,14 +10,17 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.natateam.myzkh.ApiFacade;
 import com.natateam.myzkh.AppUtils;
 import com.natateam.myzkh.BaseActivity;
+import com.natateam.myzkh.NetworkUtils;
 import com.natateam.myzkh.R;
 import com.natateam.myzkh.ZkhApp;
 import com.natateam.myzkh.adapters.HistoryItemAdapter;
 import com.natateam.myzkh.dbmodel.Bill;
 import com.natateam.myzkh.dbmodel.BillService;
 import com.natateam.myzkh.managers.SharedManager;
+import com.natateam.myzkh.net.*;
 import com.natateam.myzkh.screens.MainActivity;
 
 /**
@@ -54,14 +57,31 @@ public class BillFragment extends BaseFragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String bill=editBill.getText().toString();
+                final String bill=editBill.getText().toString();
                 if (bill.length()<10){
                     ZkhApp.getInstanse().showToast(getString(R.string.enter_bill));
                     return;
                 }
-                dbManager.addBill(bill,service_id);
-                ZkhApp.getInstanse().showToast(getString(R.string.bill_add));
-                activity.setFragmentByTag(HistoryFragment.TAG,R.id.frag_content,false);
+                if (NetworkUtils.isNetworkAvailable(activity)){
+                    activity.showProgress();
+                    ApiFacade.getInstance().addBill(bill, service_id, new Listener() {
+                        @Override
+                        public void onResponse(BaseRequest request) {
+                            activity.hideProgress();
+                            dbManager.addBill(bill,service_id);
+                            ZkhApp.getInstanse().showToast(getString(R.string.bill_add));
+                            activity.setFragmentByTag(HistoryFragment.TAG,R.id.frag_content,false);
+                        }
+
+                        @Override
+                        public void onError(com.natateam.myzkh.net.Error error, BaseRequest request) {
+                            activity.hideProgress();
+                        }
+                    });
+                }else {
+                    ZkhApp.getInstanse().showToast(getString(R.string.check_internet_toast));
+                }
+
             }
         });
         setBillInfo();

@@ -11,11 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.natateam.myzkh.ApiFacade;
 import com.natateam.myzkh.BaseActivity;
+import com.natateam.myzkh.NetworkUtils;
 import com.natateam.myzkh.R;
 import com.natateam.myzkh.ZkhApp;
 import com.natateam.myzkh.managers.SharedManager;
 import com.natateam.myzkh.model.Profile;
+import com.natateam.myzkh.net.*;
 
 /**
  * Created by macbook on 30/01/ 15.
@@ -56,14 +59,14 @@ public class ProfileFragment extends BaseFragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedManager sharedManager=SharedManager.getInstase();
-                boolean isNeed=sharedManager.isNeedAddBill();
-                String name=editFio.getText().toString();
-                String city=editCity.getText().toString();
-                String street=editStreet.getText().toString();
-                String flat=editFlat.getText().toString();
-                String corpse=editCorpse.getText().toString();
-                String house=editHouse.getText().toString();
+                final SharedManager sharedManager=SharedManager.getInstase();
+                final boolean isNeed=sharedManager.isNeedAddBill();
+                final String name=editFio.getText().toString();
+                final String city=editCity.getText().toString();
+                final String street=editStreet.getText().toString();
+                final String flat=editFlat.getText().toString();
+                final String corpse=editCorpse.getText().toString();
+                final String house=editHouse.getText().toString();
                 if (TextUtils.isEmpty(name)){
                     ZkhApp.getInstanse().showToast(getString(R.string.enter_name));
                     return;
@@ -80,18 +83,38 @@ public class ProfileFragment extends BaseFragment {
                     ZkhApp.getInstanse().showToast(getString(R.string.enter_house));
                     return;
                 }
-                sharedManager.setFio(name);
-                sharedManager.setCity(city);
-                sharedManager.setStreet(street);
-                sharedManager.setHouse(house);
-                sharedManager.setCorpse(corpse);
-                sharedManager.setFlat(flat);
-                if (isNeed) {
-                    SharedManager.getInstase().setIsNeedAddBill(false);
-                    activity.setFragmentByTag(ServicesFragment.TAG,R.id.frag_content,false);
+
+                if (NetworkUtils.isNetworkAvailable(activity)){
+                    activity.showProgress();
+                    ApiFacade.getInstance().saveProfile(name, city, street, house, corpse, flat,
+                            new Listener() {
+                                @Override
+                                public void onResponse(BaseRequest request) {
+                                    activity.hideProgress();
+                                    sharedManager.setFio(name);
+                                    sharedManager.setCity(city);
+                                    sharedManager.setStreet(street);
+                                    sharedManager.setHouse(house);
+                                    sharedManager.setCorpse(corpse);
+                                    sharedManager.setFlat(flat);
+                                    if (isNeed) {
+                                        SharedManager.getInstase().setIsNeedAddBill(false);
+                                        activity.setFragmentByTag(ServicesFragment.TAG, R.id.frag_content, false);
+                                    } else {
+                                        ZkhApp.getInstanse().showToast(getString(R.string.profile_save));
+                                    }
+                                }
+
+                                @Override
+                                public void onError(com.natateam.myzkh.net.Error error, BaseRequest request) {
+                                    activity.hideProgress();
+                                }
+                            }
+                    );
                 }else {
-                    ZkhApp.getInstanse().showToast(getString(R.string.profile_save));
+                    ZkhApp.getInstanse().showToast(getString(R.string.check_internet_toast));
                 }
+
             }
         });
     }
