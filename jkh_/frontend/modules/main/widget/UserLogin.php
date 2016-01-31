@@ -7,17 +7,18 @@
  */
 namespace frontend\modules\main\widget;
 
-use common\modules\object\models\Object;
-use common\modules\object\models\ObjectCategory;
+use frontend\modules\user\models\LoginForm;
 use yii\base\Widget;
 use yii\data\ActiveDataProvider;
 
-class GetCategoriesOrObjects extends Widget
+class UserLogin extends Widget
 {
-    public $cat_id = null;
-
     public function run()
     {
+        $user = new LoginForm();
 
+        echo $this->render('_user_login_widget', [
+            'user' => $user
+        ]);
     }
 }

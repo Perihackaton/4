@@ -64,7 +64,6 @@ return [
                 'api/get_profile' => 'api/default/get-profile',
                 'api/add_bill_for_user' => 'api/default/add-bill-for-user',
                 'api/get_history_for_service' => 'api/default/get-history-for-service',
-                'api/get_history_for_user' => 'api/default/get-history-for-user',
 //                '<module:\w+>/<action:\w+>'=>'<module>/default/<action>',
 //                '<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>'=>'<module>/<controller>/<action>',
 //                '<module:\w+>/<controller:\w+>/<action:\w+>'=>'<module>/<controller>/<action>',
