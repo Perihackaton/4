@@ -5,14 +5,41 @@
  * Date: 31/01/16
  * Time: 03:32
  */
+Yii::$app->view->registerJs('
+
+$(document).on("submit", ".register form", function(e){
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    $(document).find(".ajax-loader-2").parent().show();
+    $(document).find(".message-area-2").html("");
+    var username = $(document).find("#signupform-username").val();
+    var phone = $(document).find("#signupform-phone").val();
+    var password = $(document).find("#signupform-password").val();
+    var password_repeat = $(document).find("#signupform-password_repeat").val();
+    $.ajax({
+        type: "POST",
+        url: "/user/default/registration/",
+        dataType: "json",
+        data: {username: username, phone: phone, password: password, password_repeat: password_repeat},
+        success: function (result) {
+            if (result.error) {
+                $(document).find(".ajax-loader-2").parent().hide();
+                $(document).find(".message-area-2").html(result.message);
+            }
+        }
+    });
+});
+
+', \yii\web\View::POS_END, 'register_user');
 ?>
 
 <!-- Register modal section start -->
-<div id="myModal" class="modal fade" hidden="true">
+<div id="myModal" class="modal fade register" hidden="true">
     <?php $form = \yii\widgets\ActiveForm::begin([
         'options' => [
+            'enableClientValidation' => true,
             'novalidate' => "novalidate",
-            'method' => "post",
             'data-validate' => "parsley",
         ]
     ]); ?>
@@ -24,51 +51,45 @@
             <div class="modal-body">
                 <div class="contact-form centered">
                     <h3>Регистрация</h3>
-                    <div id="successSend" class="alert alert-success invisible">
-                        <strong>Well done!</strong>Your message has been sent.</div>
-                    <div id="errorSend" class="alert alert-error invisible">There was an error.</div>
+                    <div class="message-area-2" style="color: #1F2340; margin-bottom: 15px"></div>
                     <form id="contact-form">
                         <div class="control-group">
                             <div class="controls">
-                                <input class="span4" type="text" id="name" name="name" placeholder="* Имя" />
-                                <div class="error left-align" id="err-name">Введите имя.</div>
-                            </div>
-                        </div>
-                        <div class="control-group">
-<!--                            <div class="controls">-->
-<!--                                --><?//= $form->field($model, 'phone', [
-//                                    'template' => '
-//                                <div>{label}</div>
-//                                {input}
-//                                <div>{error}</div>
-//                    '
-//                                ])->widget(\yii\widgets\MaskedInput::className(), [
-//                                    'mask' => '+7(999)-999-9999',
-//                                    'model' => $model,
-//                                    'attribute' => 'phone',
-//                                    'options' => [
-//                                        'placeholder' =>'+7(___)-___-____',
-//                                        'class' => 'input-type-text-medium'
-//                                    ]
-//                                ]) ?>
-                                <div class="error left-align" id="err-email">Введите номер телефона.</div>
+                                <?= $form->field($user, 'username')->textInput(['placeholder' => 'ФИО'])->label(false)?>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="controls">
-                                <input class="span4" type="password" id="password" placeholder="* Пароль">
-                                <div class="error left-align" id="err-comment">Введите пароль.</div>
+                                <?= $form->field($user, 'phone', [
+                                    'template' => '
+                                {input}
+                                <div>{error}</div>
+                    '
+                                ])->widget(\yii\widgets\MaskedInput::className(), [
+                                    'mask' => '+7(999)-999-9999',
+                                    'model' => $user,
+                                    'attribute' => 'phone',
+                                    'options' => [
+                                        'placeholder' =>'+7(___)-___-____',
+                                        'class' => 'input-type-text-medium'
+                                    ]
+                                ]) ?>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="controls">
-                                <input class="span4" type="password" name="passwordrepeat" id="passwordrepeat" placeholder="* Повторите пароль">
-                                <div class="error left-align" id="err-comment">Повторите пароль.</div>
+                                <?= $form->field($user, 'password')->passwordInput(['placeholder' => 'Пароль'])->label(false)?>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="controls">
-                                <button id="send-mail" class="button">Зарегистрироваться</button>
+                                <?= $form->field($user, 'password_repeat')->passwordInput(['placeholder' => 'Повторите пароль'])->label(false)?>
+                            </div>
+                        </div>
+                        <div  hidden="true"><span class="ajax-loader-2">&nbsp;</span></div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <?= \yii\helpers\Html::submitButton('Зарегистрироваться', ['class' => 'button'])?>
                             </div>
                         </div>
                     </form>

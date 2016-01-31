@@ -2,7 +2,7 @@
 
 Yii::$app->view->registerJs('
 
-$(document).on("submit", "form", function(e){
+$(document).on("submit", "form.login", function(e){
     e.preventDefault();
     e.stopImmediatePropagation();
 
@@ -12,7 +12,8 @@ $(document).on("submit", "form", function(e){
     var password = $(document).find("#loginform-password").val();
     $.ajax({
         type: "POST",
-        url: "/user/default/login/?phone=" + phone + "&password=" + password,
+        url: "/user/default/login/",
+        data: {phone: phone, password: password},
         dataType: "json",
         success: function (result) {
             if (result.error) {
@@ -32,9 +33,8 @@ $(document).on("submit", "form", function(e){
         'options' => [
             'enableClientValidation' => true,
             'novalidate' => "novalidate",
-            'method' => "post",
-            'action' => '/user/login.html',
             'data-validate' => "parsley",
+            'class' => 'login'
         ]
     ]); ?>
     <div class="modal-dialog">

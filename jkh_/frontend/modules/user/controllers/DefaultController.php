@@ -21,14 +21,15 @@ class DefaultController extends Controller
 
     public function actionLogin()
     {
+        $model = new LoginForm();
+
         if (\Yii::$app->request->isAjax) {
-            $phone = \Yii::$app->request->get('phone');
-            $pass = \Yii::$app->request->get('password');
+            $phone = \Yii::$app->request->post('phone');
+            $pass = \Yii::$app->request->post('password');
 
             $phone = str_replace(['(', ')', '-', '+'], "", $phone);
             $phone = substr($phone, 2);
 
-            $model = new LoginForm();
             $model->phone = $phone;
             $model->password = $pass;
 
@@ -42,7 +43,6 @@ class DefaultController extends Controller
             }
 
         } else {
-            $model = new LoginForm();
 
             if (\Yii::$app->user->isGuest) {
                 if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
@@ -65,20 +65,54 @@ class DefaultController extends Controller
 
     public function actionRegistration()
     {
-        if (\Yii::$app->user->isGuest) {
-            $model = new SignupForm();
-            if ($model->load(\Yii::$app->request->post())) {
-                $user = $model->signup();
-                if ($user) {
-                    $this->redirect('/');
-                }
+        $model = new SignupForm();
+
+        if (\Yii::$app->request->isAjax) {
+            $model->username = \Yii::$app->request->post('username');
+            $model->password = \Yii::$app->request->post('password');
+            $model->password_repeat = \Yii::$app->request->post('password_repeat');
+
+            $phone = \Yii::$app->request->post('phone');
+            $phone = str_replace(['(', ')', '-', '+'], "", $phone);
+            $phone = substr($phone, 2);
+
+            $model->phone = $phone;
+
+            $user = $model->signup();
+
+            if ($user == -1) {
+                return json_encode([
+                    'error' => true,
+                    'message' => 'К данному номеру телефона уже привязан аккаунт'
+                ]);
+            } elseif ($user == -2) {
+                return json_encode([
+                    'error' => true,
+                    'message' => 'Неверно введенны данные'
+                ]);
+
+            } else {
+                $model->login();
+                return $this->redirect('/');
+
             }
 
-            return $this->render('registration', [
-                'model' => $model
-            ]);
         } else {
-            return $this->redirect('/');
+            if (\Yii::$app->user->isGuest) {
+                if ($model->load(\Yii::$app->request->post())) {
+                    $user = $model->signup();
+
+                    if ($user) {
+                        $this->redirect('/');
+                    }
+                }
+
+                return $this->render('registration', [
+                    'model' => $model
+                ]);
+            } else {
+                return $this->redirect('/');
+            }
         }
 
     }

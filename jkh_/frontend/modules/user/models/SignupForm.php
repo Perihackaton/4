@@ -22,6 +22,8 @@ class SignupForm extends Model
     public $address_flat_number;
     public $address_street;
     public $email;
+    public $_user = false;
+    public $rememberMe = 1;
 
     /**
      * @inheritdoc
@@ -30,11 +32,8 @@ class SignupForm extends Model
     {
         return [
             [['phone', 'password', 'password_repeat', 'username'], 'required'],
-            [['phone'],  'filter', 'filter' => 'trim', 'skipOnArray' => true],
-            [['phone'], 'unique', 'targetClass' => 'common\modules\user\models\User', 'message' => 'Пользователь с таким номером моб. телефона уже имеется зарегистрирован.'],
             [['password', 'password_repeat'], 'string', 'min' => 8, 'max' => 32],
-            ['password_repeat', 'compare', 'compareAttribute' => 'password', 'operator' => '=='],
-            [['phone'], 'string', 'min' => 16],
+            [['phone'], 'string'],
             [['address_index', 'address_house', 'address_flat_number'], 'integer'],
             [['email', 'address_city', 'address_area', 'address_building', 'address_street', 'username'], 'string'],
             ['email', 'email'],
@@ -77,5 +76,28 @@ class SignupForm extends Model
         }
 
         return null;
+    }
+
+    public function getUser()
+    {
+        if ($this->_user === false) {
+            $this->_user = User::findByProperties(['phone' => $this->phone]);
+        }
+
+        return $this->_user;
+    }
+
+    /**
+     * Finds user by [[username]]
+     *
+     * @return User|null
+     */
+    public function login()
+    {
+        if ($this->validate()) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        } else {
+            return false;
+        }
     }
 }

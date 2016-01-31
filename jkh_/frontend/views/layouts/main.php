@@ -66,10 +66,12 @@ AppAsset::register($this);
                         <li class="main"><a href="#" role="button" class="button" data-target="#Modal" data-toggle="modal">Личный кабинет</a></li>
                     <?php } else { ?>
                         <li class="main"><a href="/">Главная</a></li>
+                        <li class="services"><a href="/user/cabinet/services">Услуги</a></li>
                         <li><a href="#">Заявки</a></li>
-                        <li><a href="#">Бонусы</a></li>
-                        <li><a href="#">Информация</a></li>
-                        <li class="cabinet"><a href="/user/cabinet/index/">Настройки</a></li>
+                        <li class="reports"><a href="/user/cabinet/reports/">Отчеты</a></li>
+                        <li class="bonuses"><a href="#">Бонусы</a></li>
+                        <li class="info"><a href="">Информация</a></li>
+                        <li class="settings"><a href="/user/cabinet/settings/">Настройки</a></li>
                         <li><a href="/user/default/logout/">Выход</a></li>
                     <?php } ?>
                 </ul>

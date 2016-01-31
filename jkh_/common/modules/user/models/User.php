@@ -357,4 +357,9 @@ class User extends ActiveRecord implements IdentityInterface
             ->all();
     }
 
+    public function getAccs()
+    {
+        return $this->hasMany(PersonalAccount::className(), ['user_id' => 'id']);
+    }
+
 }
