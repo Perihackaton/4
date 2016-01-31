@@ -23,6 +23,7 @@ use yii\web\IdentityInterface;
  * @property string $phone
  * @property integer $role
  * @property string $activation_key
+ * @property integer $activated
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -45,10 +46,11 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
 //            [['username', 'password'], 'required'],
-            [['role', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['role', 'status', 'created_at', 'updated_at', 'activated'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email', 'password_repeat', 'old_password'], 'string', 'max' => 256],
             [['auth_key', 'activation_key'], 'string', 'max' => 32],
             [['phone'], 'string', 'max' => 128],
+            [['password'], 'string', 'min' => 8, 'max' => 32],
             [['phone'], 'exist', 'message' => 'Пользователя с таким номером телефона не существует.', 'on' => 'requestPasswordResetToken'],
             ['password_repeat', 'compare', 'compareAttribute' => 'password', 'operator' => '==', 'on' => 'changePassword'],
         ];
@@ -73,7 +75,8 @@ class User extends ActiveRecord implements IdentityInterface
             'updated_at' => 'Дата обновления',
             'password_repeat' => 'Повторить пароль',
             'old_password' => 'Старый пароль',
-            'activation_key' => 'Код активации'
+            'activation_key' => 'Код активации',
+            'activated' => 'Аккаунт активирован'
         ];
     }
 
@@ -131,30 +134,30 @@ class User extends ActiveRecord implements IdentityInterface
         }
     }
 
-    public static function registerByPhoneNumber($phone_number, $username, $email = null, $password = null)
+    public static function registerByPhoneNumber($phone_number, $username, $password = null, $email = null)
     {
         $user = User::findByProperties(['phone' => $phone_number]);
+
         if (empty($user)) {
             $user = new static();
-            $new_user_is_reg = true;
+            $user->phone = $phone_number;
+            $user->username = $username;
+            if ($email)
+                $user->email = $email;
+            $user->password = ($password == null ? static::generatePassword() : $password);
+            $user->setPassword($user->password);
+            $user->generateAuthKey();
+            $user->generateActivationKey();
+            if ($user->save()) {
+    //            \Yii::$app->sms->sms_send(preg_replace("/[^0-9]/", '', $phone_number),
+    //                'Спасибо за регистрацию! Ваш пароль: '.$user->password,
+    //            'Silvershah');
+                return $user->activation_key;
+            } else {
+                return -2;
+            }
         } else {
-            $new_user_is_reg = false;
-        }
-        $user->phone = $phone_number;
-        $user->username = $username;
-        if ($email)
-            $user->email = $email;
-        $user->password = ($password == null ? static::generatePassword() : $password);
-        $user->setPassword($user->password);
-        $user->generateAuthKey();
-        $user->generateActivationKey();
-        if ($user->save()) {
-//            \Yii::$app->sms->sms_send(preg_replace("/[^0-9]/", '', $phone_number),
-//                'Спасибо за регистрацию! Ваш пароль: '.$user->password,
-//            'Silvershah');
-            return [$user, $new_user_is_reg];
-        } else {
-            return null;
+            return -1;
         }
     }
 

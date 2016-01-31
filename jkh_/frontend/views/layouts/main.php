@@ -11,13 +11,14 @@ use frontend\assets\AppAsset;
 use common\widgets\Alert;
 AppAsset::register($this);
 
-$ch = curl_init("jkh/cp/api/register/");
+$ch = curl_init("jkh/cp/api/add_bill_for_user/");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HEADER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array('Token: VPSOquF2mRNr4pP3iDYyVXC1av8wiY1GZGydXq5C3vhPFR4M2TvTP8hlXSYj44OkCMaOkk0CfBZj1rj4KoYdHq15GUM2fJGztgFDWsT3H4ASIPY8wt55eRj4SPoTizvv'));
 curl_setopt($ch, CURLOPT_POSTFIELDS, [
-    "login" => "1231232131",
-    "password" => "pa",
-    'fio' => 'fifo'
+    'bill' => 'fifo',
+    'service_id' => 1,
+//    'Token' => 'VPSOquF2mRNr4pP3iDYyVXC1av8wiY1GZGydXq5C3vhPFR4M2TvTP8hlXSYj44OkCMaOkk0CfBZj1rj4KoYdHq15GUM2fJGztgFDWsT3H4ASIPY8wt55eRj4SPoTizvv'
 ]);
 $res = curl_exec($ch);
 var_dump($res);

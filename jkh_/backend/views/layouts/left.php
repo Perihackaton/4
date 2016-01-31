@@ -8,18 +8,13 @@
                 'options' => ['class' => 'sidebar-menu'],
                 'items' => [
                     ['label' => 'Меню', 'options' => ['class' => 'header']],
-                    [
-                        'label' => 'Управление объектами',
-                        'icon' => 'fa fa-share',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Объекты', 'icon' => 'fa fa-file-code-o', 'url' => ['/object/default/index'],],
-                            ['label' => 'Категории', 'icon' => 'fa fa-dashboard', 'url' => ['/object/category/index'],],
-                            ['label' => 'Доступность объектов', 'icon' => 'fa fa-file-code-o', 'url' => ['/object/access-type/index'],],
-                        ],
-                    ],
                     ['label' => 'Страницы', 'icon' => 'fa fa-dashboard', 'url' => ['/page']],
-                    ['label' => 'Пользователи', 'icon' => 'fa fa-dashboard', 'url' => ['/user']],
+                    ['label' => 'Отчеты', 'icon' => 'fa fa-dashboard', 'url' => ['/reports/default/view-reports/']],
+                    ['label' => 'Отчеты2', 'icon' => 'fa fa-dashboard', 'url' => ['/reports/default/view-reports-on-money/']],
+                    ['label' => 'Пользователи', 'icon' => 'fa fa-dashboard', 'url' => ['/user/default/']],
+                    ['label' => 'Управление лицевым счетом', 'icon' => 'fa fa-dashboard', 'url' => ['/user/personal-acc/']],
+                    ['label' => 'История оплаты', 'icon' => 'fa fa-dashboard', 'url' => ['/user/payment-data/']],
+
                 ],
             ]
         ) ?>

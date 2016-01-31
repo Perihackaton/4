@@ -11,11 +11,9 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property string $value
- * @property string $dept
+ * @property double $dept
  * @property integer $service_id
  * @property integer $user_id
- * @property integer $created_at
- * @property integer $updated_at
  */
 class PersonalAccount extends \yii\db\ActiveRecord
 {
@@ -33,8 +31,9 @@ class PersonalAccount extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['value', 'created_at', 'updated_at', 'service_id'], 'required'],
-            [['value', 'service_id', 'user_id'], 'integer'],
+            [['value', 'service_id'], 'required'],
+            [['service_id', 'user_id'], 'integer'],
+            [['value'], 'string', 'max' => 256],
             [['dept'], 'double']
         ];
     }
@@ -48,25 +47,11 @@ class PersonalAccount extends \yii\db\ActiveRecord
             'id' => 'ID',
             'value' => 'Значение',
             'dept' => 'Задолженность',
-            'created_at' => 'Дата создания',
-            'updated_at' => 'Дата обновления',
             'service_id' => 'id сервиса',
             'user_id' => 'id пользователя'
         ];
     }
 
-    public function behaviors()
-    {
-        return [
-            'timestamp' => [
-                'class' => 'yii\behaviors\TimestampBehavior',
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at']
-                ]
-            ]
-        ];
-    }
 
     public function getAddress()
     {

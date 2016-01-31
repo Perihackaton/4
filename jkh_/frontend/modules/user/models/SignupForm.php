@@ -73,7 +73,7 @@ class SignupForm extends Model
     public function signup()
     {
         if ($this->validate()) {
-            return User::registerByPhoneNumber($this->phone, $this->username, $this->email, $this->password);
+            return User::registerByPhoneNumber($this->phone, $this->username, $this->password, $this->email);
         }
 
         return null;
