@@ -1,6 +1,6 @@
 <?php
 
-    namespace app\modules\reports\models;
+    namespace common\modules\reports\models;
 
     use Yii;
 

@@ -1,4 +1,5 @@
 <?php
+$this->title = "ЖКХакер";
 
 Yii::$app->view->registerJs('
 $(document).ready(function(){
@@ -32,7 +33,7 @@ setlocale(LC_TIME, 'ru_RU');
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th><?= strftime("%d %B %Y", $payment->kvit_date)?></th>
+                    <th><?= date("d.m.Y", $payment->kvit_date)?></th>
                 </tr>
                 </thead>
                 <tbody>

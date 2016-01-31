@@ -47,7 +47,7 @@ $(document).ready(function(){
                 <h2>Акции и бонусы</h2>
                 <p>Оплачивайте услуги вовремя и получайте бонусы на счет</p>
                 <div class="da-img">
-                    <img src="/frontend/web/images/1.png" width="320" alt="image02">
+                    <img src="/frontend/web/images/3.png" width="320" alt="image02">
                 </div>
             </div>
             <!-- Start third slide -->

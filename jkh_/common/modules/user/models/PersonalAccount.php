@@ -52,7 +52,6 @@ class PersonalAccount extends \yii\db\ActiveRecord
         ];
     }
 
-
     public function getAddress()
     {
         return $this->hasOne(PersonalAccountAddress::className(), ['personal_acc_id' => 'id']);

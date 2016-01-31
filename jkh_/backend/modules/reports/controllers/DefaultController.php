@@ -2,9 +2,9 @@
 
     namespace backend\modules\reports\controllers;
 
-    use app\modules\reports\models\Report;
-    use app\modules\reports\models\ReportOnMoney;
-    use app\modules\reports\models\WorkType;
+    use common\modules\reports\models\Report;
+    use common\modules\reports\models\ReportOnMoney;
+    use common\modules\reports\models\WorkType;
     use yii\web\Controller;
 
     class DefaultController extends Controller {

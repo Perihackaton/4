@@ -7,7 +7,8 @@
  */
 namespace frontend\modules\user\controllers;
 
-use app\modules\reports\models\WorkType;
+use common\modules\reports\models\Report;
+use common\modules\reports\models\WorkType;
 use common\modules\services\models\Services;
 use common\modules\user\models\PaymentData;
 use common\modules\user\models\PersonalAccount;
@@ -41,6 +42,37 @@ class CabinetController extends Controller
         return $this->render('index', [
         ]);
     }
+    public function actionBonnus()
+    {
+        return $this->render('bonnus', [
+        ]);
+    }
+
+    public function actionInfo()
+    {
+        return $this->render('info', [
+        ]);
+    }
+
+    public function actionReportItem($id) {
+        if (\Yii::$app->request->isAjax) {
+            $workType = WorkType::getAllWorkTypes()[ $id ];
+            $reportList = Report::find()->where(['work_type' => $id])->all();
+            $report = [];
+            $i = 0;
+            foreach ($reportList as $index => $report) {
+                $report[] = [
+                    'num' => ++$i,
+                    'date' => $report->date,
+                    'sum' => $report->sum,
+                    'comm' => $report->comm
+                ];
+            }
+
+            return json_encode($report);
+        }
+        return false;
+    }
 
     public function actionReports()
     {
@@ -53,6 +85,13 @@ class CabinetController extends Controller
     public function actionSettings()
     {
         return $this->render('settings', [
+
+        ]);
+    }
+
+    public function actionRequest()
+    {
+        return $this->render('request', [
 
         ]);
     }

@@ -5,6 +5,7 @@
  * Date: 31/01/16
  * Time: 08:41
  */
+$this->title = "ЖКХакер";
 
 Yii::$app->view->registerJs('
 $(document).ready(function(){

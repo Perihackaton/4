@@ -1,5 +1,5 @@
 <?php
-    namespace backend\modules\reports;
+    namespace common\modules\reports;
 
     class Module extends \yii\base\Module {
         public function init () {

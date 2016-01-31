@@ -11,6 +11,15 @@ Yii::$app->view->registerJs('
 $(document).ready(function(){
     $(".nav li.reports").addClass("active");
 });
+$(".button.more").click(function(){
+    var id = $(this).attr("data-id");
+    $.ajax({
+            url:"/user/cabinet/report-item/?id=" + id,
+            dataType:"json",
+            success:function(result) {
+            }
+        });
+});
 ', \yii\web\View::POS_END, 'change_active');
 
 ?>
@@ -42,13 +51,14 @@ $(document).ready(function(){
             </thead>
             <tbody>
                 <?php
-                foreach ($report_list as $index => $report) { ?>
+                foreach ($reportList as $index => $report) { ?>
                     <tr>
-                        <td  width="10px"><?= $index?></td>
+                        <td width="10px"><?= $index?></td>
                         <td> <?= $workTypes[ $report['work_type'] ]?></td>
                         <td style="text-align:center;"><?=$report['sum']?></td>
-                        <td><a href="#" class="btn btn-lg btn-info"
-                               data-toggle="modal"  data-target="#tModal">Подробнее</a></td>
+                        <td><a href="#" class="button more"
+                               data-toggle="modal"  data-target="#tModal" data-id="<?=$report['work_type']?>">Подробнее</a>
+                        </td>
                     </tr>
                 <?php } ?>
             </tbody>
@@ -57,7 +67,7 @@ $(document).ready(function(){
     <!--end Report section-->
 
     <!--Modal Start-->
-    <div class="modal fade" id="tModal">
+    <div class="modal fade" id="tModal" hidden="hidden">
         <div class="modal-content">
             <div class="modal-header"><button class="close" type="button" data-dismiss="modal">x</button>
                 <h4 class="modal-title" id="myModalLabel">Подробнее о проделанных работах</h4>
@@ -68,7 +78,7 @@ $(document).ready(function(){
                     <thead>
                     <tr>
                         <th>№</th>
-                        <th>Дата сумма</th>
+                        <th>Дата</th>
                         <th>Сумма</th>
                         <th>Подробный комментарий</th>
                     </tr>
@@ -83,7 +93,7 @@ $(document).ready(function(){
                     </tbody>
                 </table>
             </div>
-            <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Закрыть</button>
+            <div class="modal-footer"><button class="button" type="button" data-dismiss="modal">Закрыть</button>
             </div>
         </div>
     </div>
@@ -92,40 +102,40 @@ $(document).ready(function(){
 
 
 
-    <!--Report2 section start-->
-    <div class="container col-lg-12" >
-        <ul class="nav nav-pills">
-            <li class="filter" data-filter="">
-                <a href="#">Выполненные работы</a>
-            </li>
-            <li class="filter" data-filter="">
-                <a href="#">Доходы</a>
-            </li>
-            <li class="filter" data-filter="">
-                <a href="#">Анализ и статистика</a>
-            </li>
-        </ul>
-        <h3 class="centered">Доходы</h3>
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>№</th>
-                <th>Месяц</th>
-                <th>Общая сумма</th>
-                <th>Комментарий</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td  width="10px">1</td>
-                <td>Январь</a></td>
-                <td style="text-align:center;">15000</td>
-                <td>Подробный комментарий</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <!--end Report2 section-->
+<!--    <!--Report2 section start-->
+<!--    <div class="container col-lg-12" >-->
+<!--        <ul class="nav nav-pills">-->
+<!--            <li class="filter" data-filter="">-->
+<!--                <a href="#">Выполненные работы</a>-->
+<!--            </li>-->
+<!--            <li class="filter" data-filter="">-->
+<!--                <a href="#">Доходы</a>-->
+<!--            </li>-->
+<!--            <li class="filter" data-filter="">-->
+<!--                <a href="#">Анализ и статистика</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--        <h3 class="centered">Доходы</h3>-->
+<!--        <table class="table table-bordered table-striped">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>№</th>-->
+<!--                <th>Месяц</th>-->
+<!--                <th>Общая сумма</th>-->
+<!--                <th>Комментарий</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr>-->
+<!--                <td  width="10px">1</td>-->
+<!--                <td>Январь</a></td>-->
+<!--                <td style="text-align:center;">15000</td>-->
+<!--                <td>Подробный комментарий</td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--    <!--end Report2 section-->
 </div>
 <!-- Footer section start -->
 
