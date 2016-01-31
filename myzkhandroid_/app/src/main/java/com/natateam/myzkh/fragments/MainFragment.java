@@ -41,7 +41,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         serviceList.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter=new BillServiceAdapter(dbManager.getAllServices(),this,false);
         serviceList.setAdapter(adapter);
-        if (NetworkUtils.isNetworkAvailable(activity)){
+        if (NetworkUtils.isNetworkAvailable(activity)&&SharedManager.getInstase().getTOKEN()!=null){
             ApiFacade.getInstance().getProfile(new Listener() {
                 @Override
                 public void onResponse(BaseRequest request) {

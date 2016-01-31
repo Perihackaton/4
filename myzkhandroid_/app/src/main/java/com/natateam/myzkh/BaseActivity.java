@@ -1,12 +1,14 @@
 package com.natateam.myzkh;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 
 import com.natateam.myzkh.fragments.BaseFragment;
 import com.natateam.myzkh.fragments.BillFragment;
@@ -155,7 +157,7 @@ public class BaseActivity extends ActionBarActivity {
                 isNeedFinish = true;
             }
             if (isNeedFinish) {
-                super.onBackPressed();
+                showExitDialog();
                 return;
             }
 
@@ -219,5 +221,19 @@ public class BaseActivity extends ActionBarActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+    public void showExitDialog(){
+        new AlertDialog.Builder(this)
+                .setInverseBackgroundForced(false)
+                .setMessage(this.getResources().getString(R.string.exit_dialog))
+                .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+
+                    }
+                })
+                .setNegativeButton(R.string.dialog_no, null)
+                .setCancelable(false)
+                .show();
     }
 }

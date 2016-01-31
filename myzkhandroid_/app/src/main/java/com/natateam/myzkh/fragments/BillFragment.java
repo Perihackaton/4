@@ -34,6 +34,7 @@ public class BillFragment extends BaseFragment {
     private Button btnSave;
     private CheckBox checkboxscore;
     private int service_id;
+    Bill currentBill;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,6 +101,10 @@ public class BillFragment extends BaseFragment {
         BillService billService=dbManager.getBillServiceById(service_id);
         activity.setTitle(billService.getName());
         activity.setTopImage(AppUtils.getServiceDrawable(service_id));
+        currentBill=dbManager.getBillByBillService(service_id);
+        if (currentBill!=null){
+            editBill.setText(currentBill.getBill());
+        }
     }
 
     @Override

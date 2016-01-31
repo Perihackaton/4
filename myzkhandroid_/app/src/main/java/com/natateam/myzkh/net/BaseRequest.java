@@ -181,8 +181,9 @@ public abstract class BaseRequest extends Request<String> {
             if (mError.message.indexOf("java")!=-1){
                 ZkhApp.getInstanse().showToast(getContext().getString(R.string.check_internet_toast));
             }else {
-                if (mError.code==201){
+                if (mError.code==402){
                     LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(TOKEN_NOT_FOUND));
+                    SharedManager.getInstase().setToken(null);
                 }
                 ZkhApp.getInstanse().showToast(mError.message);
             }

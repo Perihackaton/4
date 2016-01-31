@@ -1,9 +1,15 @@
 package com.natateam.myzkh.screens;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +23,7 @@ import android.widget.TextView;
 
 import com.natateam.myzkh.BaseActivity;
 import com.natateam.myzkh.R;
+import com.natateam.myzkh.ZkhApp;
 import com.natateam.myzkh.fragments.BillFragment;
 import com.natateam.myzkh.fragments.MainFragment;
 import com.natateam.myzkh.fragments.NewsFragment;
@@ -26,6 +33,7 @@ import com.natateam.myzkh.fragments.ServicesFragment;
 import com.natateam.myzkh.fragments.SettFragment;
 import com.natateam.myzkh.managers.SharedManager;
 import com.natateam.myzkh.model.ActivityMediator;
+import com.natateam.myzkh.net.BaseRequest;
 
 public class MainActivity extends BaseActivity {
     private SharedManager sharedManager;
@@ -122,6 +130,8 @@ public class MainActivity extends BaseActivity {
     }
 
 
+
+
     @Override
     public void setTitleByTag(String tag) {
         super.setTitleByTag(tag);
@@ -130,9 +140,11 @@ public class MainActivity extends BaseActivity {
         txtTitle=(TextView)mToolbarLayout.findViewById(R.id.txtTitle);
         imgTop=(ImageView)findViewById(R.id.imgTop);
         layoutTop=(FrameLayout)findViewById(R.id.layoutTop);
+        navigationView=(NavigationView)findViewById(R.id.navigation_view);
         if (tag.equals(MainFragment.TAG)){
             txtTitle.setText(getString(R.string.main_title));
             setTopImage(R.drawable.main_icon);
+            navigationView.getMenu().getItem(0).setChecked(true);
         }else if (tag.equals(SettFragment.TAG)){
             txtTitle.setText(getString(R.string.sett_title));
             setTopImage(R.drawable.sett_icon);
@@ -168,6 +180,26 @@ public class MainActivity extends BaseActivity {
             finish();
             activityMediator.showAuth();
         }
+        IntentFilter intentFilter= new IntentFilter(BaseRequest.TOKEN_NOT_FOUND);
+        LocalBroadcastManager.getInstance(ZkhApp.getInstanse().getApplicationContext()).registerReceiver(mReciver,intentFilter);
+    }
+
+    BroadcastReceiver mReciver= new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(BaseRequest.TOKEN_NOT_FOUND)){
+                SharedManager.getInstase().setToken(null);
+                finish();
+                activityMediator.showAuth();
+            }
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(ZkhApp.getInstanse().getApplicationContext()).
+                unregisterReceiver(mReciver);
     }
 
     @Override
@@ -187,4 +219,6 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(this, ScanActivity.class);
         startActivityForResult(intent, 1);
     }
+
+
 }
