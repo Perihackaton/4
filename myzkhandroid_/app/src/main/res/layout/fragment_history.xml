@@ -38,7 +38,8 @@
             android:background="@drawable/edittextprofile"
             android:textSize="16sp"
             android:padding="5dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:gravity="right"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

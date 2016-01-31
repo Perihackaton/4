@@ -6,6 +6,8 @@ import android.text.Editable;
 
 import com.natateam.myzkh.dbmodel.BillService;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Created by macbook on 22/06/ 15.
  */
@@ -160,5 +162,11 @@ public class AppUtils {
 
         }
         return R.drawable.icon_bill_1;
+    }
+
+    public static String getDatebyLong(long longTime){
+        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd.MM.yyyy");
+        String time= simpleDateFormat.format(longTime);
+        return time;
     }
 }

@@ -20,6 +20,7 @@ import com.natateam.myzkh.R;
 import com.natateam.myzkh.fragments.BillFragment;
 import com.natateam.myzkh.fragments.MainFragment;
 import com.natateam.myzkh.fragments.NewsFragment;
+import com.natateam.myzkh.fragments.OrderFragment;
 import com.natateam.myzkh.fragments.ProfileFragment;
 import com.natateam.myzkh.fragments.ServicesFragment;
 import com.natateam.myzkh.fragments.SettFragment;
@@ -68,6 +69,10 @@ public class MainActivity extends BaseActivity {
                         case R.id.drawer_info:
                             setFragmentByTag(NewsFragment.TAG, R.id.frag_content, false);
                             break;
+                        case R.id.drawer_order:{
+                            setFragmentByTag(OrderFragment.TAG,R.id.frag_content,false);
+                            break;
+                        }
 
                     }
                 }
@@ -140,6 +145,9 @@ public class MainActivity extends BaseActivity {
         }else if (tag.equals(NewsFragment.TAG)){
             txtTitle.setText(getString(R.string.info_title));
             setTopImage(R.drawable.info_icon);
+        }else if (tag.equals(OrderFragment.TAG)){
+            txtTitle.setText(getString(R.string.order_title));
+            setTopImage(R.drawable.order_ic);
         }
 
     }
@@ -168,9 +176,7 @@ public class MainActivity extends BaseActivity {
         if (resultCode==RESULT_OK) {
             if (mCurrentVisibleFragment.equals(BillFragment.TAG)) {
                 BillFragment billFragment = (BillFragment) getSupportFragmentManager().findFragmentByTag(BillFragment.TAG);
-                //if (data.getAction().contains("code")) {
                 billFragment.setBill(data.getStringExtra("code"));
-                //}
             }
         }
     }
@@ -180,6 +186,5 @@ public class MainActivity extends BaseActivity {
     public void showScan(){
         Intent intent = new Intent(this, ScanActivity.class);
         startActivityForResult(intent, 1);
-        //activityMediator.showScan();
     }
 }

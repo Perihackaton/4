@@ -8,7 +8,9 @@ import com.natateam.myzkh.dbmodel.Bill;
 import com.natateam.myzkh.dbmodel.BillHistoryItem;
 import com.natateam.myzkh.dbmodel.BillService;
 import com.natateam.myzkh.dbmodel.NewsItem;
+import com.natateam.myzkh.model.OrderItem;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import io.realm.Realm;
@@ -46,6 +48,7 @@ public class DbManager {
                 billService.setName(zkh_list[i]);
                 billService.setService_id(i+1);
             }
+            //news
             NewsItem newsItem=realm.createObject(NewsItem.class);
             newsItem.setTheme("Объявление об отключении воды");
             newsItem.setText("В ночь с 03 апреля на 04 февраля 2016 г. с 00.00 до 03.00 будет произведено отключение холодного и горячего водоснабжения в связи с ремонтными работами");
@@ -55,10 +58,25 @@ public class DbManager {
             newsItem.setText("Согласно тексту Закона «О внесении изменений в Закон Республики Дагестан «Об организации проведения капитального ремонта " +
                     "общего имущества в многоквартирных домах в Республике Дагестан», в документ включено положение о проведении капремонта в подъездах.");
             newsItem.setDate("25.12.2015");
+
+            //orders
+            OrderItem orderItem=realm.createObject(OrderItem.class);
+            orderItem.setTheme("Заявка на ремонт канализации");
+            orderItem.setAdress("г. Махачкала. Ул. Гамидова 55.");
+            orderItem.setPercent(75);
+
+            orderItem=realm.createObject(OrderItem.class);
+            orderItem.setTheme("Заявка на освещение двора");
+            orderItem.setAdress("г. Махачкала. Ул. Титова 39.");
+            orderItem.setPercent(25);
+
+
             realm.commitTransaction();
             SharedManager.getInstase().setIsDbTestEmpty(false);
         }
     }
+
+
 
     public RealmResults<BillService> getAllServices(){
         RealmQuery<BillService> query = realm.where(BillService.class);
@@ -84,7 +102,7 @@ public class DbManager {
             for (int i=0;i<3;i++){
                 BillHistoryItem billHistoryItem=realm.createObject(BillHistoryItem.class);
                 billHistoryItem.setBill(billText);
-                billHistoryItem.setDate("Ноябрь 2015");
+                billHistoryItem.setDate(Long.toString(System.currentTimeMillis()));
                 billHistoryItem.setDept_begin(random.nextInt(10000));
                 billHistoryItem.setDept_end(random.nextInt(10000));
                 billHistoryItem.setEnrolled(random.nextInt(10000));
@@ -105,6 +123,28 @@ public class DbManager {
     public RealmResults<NewsItem> getAllNews(){
         RealmQuery<NewsItem> query=realm.where(NewsItem.class);
         return query.findAll();
+    }
+
+    public RealmResults<OrderItem> getAllOrders(){
+        RealmQuery<OrderItem> query=realm.where(OrderItem.class);
+        return query.findAll();
+    }
+    public void updateBills(String bills){
+        realm.beginTransaction();
+        realm.clear(Bill.class);
+        realm.createAllFromJson(Bill.class,bills);
+        realm.commitTransaction();
+    }
+
+    public void updateHistory(String history,String bill){
+        realm.beginTransaction();
+        RealmResults<BillHistoryItem> historyItems=getHistoryItemsForBill(bill);
+        if (historyItems!=null) {
+            historyItems.clear();
+        }
+        realm.createAllFromJson(BillHistoryItem.class, history);
+        realm.commitTransaction();
+
     }
 
 

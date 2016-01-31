@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBarActivity;
 import com.natateam.myzkh.fragments.BaseFragment;
 import com.natateam.myzkh.fragments.BillFragment;
 import com.natateam.myzkh.fragments.MainFragment;
+import com.natateam.myzkh.fragments.NewsFragment;
+import com.natateam.myzkh.fragments.OrderFragment;
 import com.natateam.myzkh.fragments.ProfileFragment;
 import com.natateam.myzkh.fragments.ServicesFragment;
 import com.natateam.myzkh.fragments.SettFragment;
@@ -147,7 +149,9 @@ public class BaseActivity extends ActionBarActivity {
             super.onBackPressed();
         }else {
             if (mCurrentVisibleFragment.equals(MainFragment.TAG) ||
-                    mCurrentVisibleFragment.equals(SettFragment.TAG)) {
+                    mCurrentVisibleFragment.equals(SettFragment.TAG)||
+                    mCurrentVisibleFragment.equals(NewsFragment.TAG)||
+                    mCurrentVisibleFragment.equals(OrderFragment.TAG)) {
                 isNeedFinish = true;
             }
             if (isNeedFinish) {

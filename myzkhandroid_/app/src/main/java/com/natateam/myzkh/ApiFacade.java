@@ -3,6 +3,8 @@ package com.natateam.myzkh;
 import com.android.volley.RequestQueue;
 import com.natateam.myzkh.net.AddBillRequest;
 import com.natateam.myzkh.net.AuthRequest;
+import com.natateam.myzkh.net.GetHistoryRequest;
+import com.natateam.myzkh.net.GetProfileRequest;
 import com.natateam.myzkh.net.Listener;
 import com.natateam.myzkh.net.RegCodeRequest;
 import com.natateam.myzkh.net.RegRequest;
@@ -46,5 +48,13 @@ public class ApiFacade {
 
     public void addBill(String bill,int service_id, Listener listener){
         ZkhApp.getInstanse().getRequestQueue().add(new AddBillRequest(bill, service_id, listener));
+    }
+
+    public void getProfile(Listener listener){
+        ZkhApp.getInstanse().getRequestQueue().add(new GetProfileRequest(listener));
+    }
+
+    public void getHistory(int service_id, String bill, Listener listener){
+        ZkhApp.getInstanse().getRequestQueue().add(new GetHistoryRequest(service_id, bill, listener));
     }
 }

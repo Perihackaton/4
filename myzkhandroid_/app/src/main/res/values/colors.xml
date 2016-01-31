@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#2b2f48</color>
-    <color name="colorPrimaryDark">#0c0d13</color>
-    <color name="colorAccent">#ffffff</color>
+    <color name="colorPrimaryDark">#2b2f48</color>
+    <color name="colorAccent">#2b2f48</color>
     <color name="edittexttransparent">#55ffffff</color>
     <color name="edittextcolor">#474331</color>
     <color name="btn_enter">#2b2f48</color>
@@ -14,5 +14,6 @@
     <color name="color_dept_third">#5bc87b</color>
     <color name="footer">#d9d9d9</color>
     <color name="edittextprofile">#c6c6c6</color>
+    <color name="progress_color">#03bc9a</color>
 
 </resources>
