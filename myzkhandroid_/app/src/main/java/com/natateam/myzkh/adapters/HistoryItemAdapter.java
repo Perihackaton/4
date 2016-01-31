@@ -69,7 +69,7 @@ public class HistoryItemAdapter extends RecyclerView.Adapter<HistoryItemAdapter.
         // - replace the contents of the view with that element
         //holder.mTextView.setText(mDataset.get());
         final BillHistoryItem item = mDataset.get(position);
-        String date=AppUtils.getDatebyLong(Long.parseLong(item.getDate()));
+        String date=AppUtils.getDatebyLong(Long.parseLong(item.getDate())*1000);
         holder.txtDate.setText(date);
         int color= AppUtils.getColorForDept(item.getDept_end());
         String rouble=" р.";
