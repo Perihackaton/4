@@ -39,7 +39,9 @@
             android:textSize="16sp"
             android:padding="5dp"
             android:layout_gravity="center"
-            android:gravity="right"/>
+            android:gravity="right"
+            android:text="5436"
+            android:enabled="false"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

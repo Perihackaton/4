@@ -12,8 +12,8 @@
     <color name="color_dept_first">#ff0000</color>
     <color name="color_dept_second">#f2cf58</color>
     <color name="color_dept_third">#5bc87b</color>
-    <color name="footer">#d9d9d9</color>
-    <color name="edittextprofile">#c6c6c6</color>
+    <color name="footer">#e6e6e6</color>
+    <color name="edittextprofile">#ffea3c</color>
     <color name="progress_color">#03bc9a</color>
 
 </resources>

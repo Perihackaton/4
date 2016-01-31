@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp">
+    android:padding="20dp"
+    android:weightSum="1"
+    >
+ <ScrollView
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:layout_weight="1">
 <LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,7 +23,6 @@
         android:layout_height="wrap_content"
         style="@style/myedittext"
         android:layout_weight="0.5"
-        android:layout_marginRight="15dp"
         android:background="@drawable/edittextprofile"
         android:padding="10dp"
         android:textSize="16sp"
@@ -38,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/myedittext"
-        android:layout_marginRight="15dp"
+
         android:background="@drawable/edittextprofile"
         android:padding="10dp"
         android:hint="@string/city_hint"
@@ -51,7 +56,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/myedittext"
-        android:layout_marginRight="15dp"
         android:background="@drawable/edittextprofile"
         android:padding="10dp"
         android:hint="@string/street_hint"
@@ -96,7 +100,6 @@
             android:layout_height="wrap_content"
             style="@style/myedittext"
             android:layout_weight="0.3"
-            android:layout_marginRight="15dp"
             android:background="@drawable/edittextprofile"
             android:padding="10dp"
             android:hint="@string/flat_hint"
@@ -110,6 +113,7 @@
 
 
 </LinearLayout>
+ </ScrollView>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -118,9 +122,8 @@
         style="@style/button"
         android:textSize="20sp"
         android:textColor="@android:color/white"
-        android:layout_marginBottom="20dp"
         android:background="@drawable/btnshapereg"
         android:drawableRight="@drawable/arrow_white"
         android:layout_gravity="bottom"
         />
-</FrameLayout>
+</LinearLayout>
