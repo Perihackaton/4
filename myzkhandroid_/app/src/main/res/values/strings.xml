@@ -20,7 +20,7 @@
         <item>Тех. обслуживание</item>/
     </string-array>
     <string name="menu_main">ГЛАВНАЯ</string>
-    <string name="menu_order">ЗАЯВКА</string>
+    <string name="menu_order">ЗАЯВКИ</string>
     <string name="menu_bonus">БОНУСЫ</string>
     <string name="menu_info">ИНФОРМАЦИЯ</string>
     <string name="menu_sett">НАСТРОЙКИ</string>
@@ -64,4 +64,6 @@
     <string name="enter_pass">Введите пароль</string>
     <string name="repeat_pass">Повторите пароль</string>
     <string name="pass_not_true">Пароли не совпадают</string>
+    <string name="order_title">Заявки</string>
+
 </resources>

@@ -9,12 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.natateam.myzkh.ApiFacade;
 import com.natateam.myzkh.AppUtils;
+import com.natateam.myzkh.NetworkUtils;
 import com.natateam.myzkh.R;
 import com.natateam.myzkh.adapters.HistoryItemAdapter;
 import com.natateam.myzkh.dbmodel.Bill;
 import com.natateam.myzkh.dbmodel.BillService;
 import com.natateam.myzkh.managers.SharedManager;
+import com.natateam.myzkh.net.*;
 import com.natateam.myzkh.screens.MainActivity;
 
 /**
@@ -48,7 +51,28 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
         activity.setTopImage(AppUtils.getServiceDrawable(billService.getService_id()));
         txtTariff=(TextView)getView().findViewById(R.id.txtTariff);
         txtTariff.setText(getString(R.string.current_tariff)+" 50.01 р/кв.м ");
+        getHistoryFromServeer();
 
+    }
+
+    public void getHistoryFromServeer(){
+        if  (NetworkUtils.isNetworkAvailable(activity)){
+            ApiFacade.getInstance().getHistory(billService.getService_id(), bill.getBill(), new Listener() {
+                @Override
+                public void onResponse(BaseRequest request) {
+                    bill=dbManager.getBillByBillService(SharedManager.getInstase().getCurrentServiceId());
+                    billService=dbManager.getBillServiceById(bill.getService_id());
+                    historyItemAdapter.setmDataset(dbManager.getHistoryItemsForBill(bill.getBill()));
+                    activity.setTitle(billService.getName());
+                    activity.setTopImage(AppUtils.getServiceDrawable(billService.getService_id()));
+                }
+
+                @Override
+                public void onError(com.natateam.myzkh.net.Error error, BaseRequest request) {
+
+                }
+            });
+        }
     }
 
     public void updateHistory(){
@@ -57,6 +81,7 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
         historyItemAdapter.setmDataset(dbManager.getHistoryItemsForBill(bill.getBill()));
         activity.setTitle(billService.getName());
         activity.setTopImage(AppUtils.getServiceDrawable(billService.getService_id()));
+        getHistoryFromServeer();
     }
 
     @Override

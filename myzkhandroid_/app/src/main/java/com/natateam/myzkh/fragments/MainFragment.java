@@ -9,10 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.natateam.myzkh.ApiFacade;
 import com.natateam.myzkh.BaseActivity;
+import com.natateam.myzkh.NetworkUtils;
 import com.natateam.myzkh.R;
 import com.natateam.myzkh.adapters.BillServiceAdapter;
 import com.natateam.myzkh.managers.SharedManager;
+import com.natateam.myzkh.net.*;
 
 import org.w3c.dom.Text;
 
@@ -38,6 +41,19 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
         serviceList.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter=new BillServiceAdapter(dbManager.getAllServices(),this,false);
         serviceList.setAdapter(adapter);
+        if (NetworkUtils.isNetworkAvailable(activity)){
+            ApiFacade.getInstance().getProfile(new Listener() {
+                @Override
+                public void onResponse(BaseRequest request) {
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onError(com.natateam.myzkh.net.Error error, BaseRequest request) {
+                    int u=1;
+                }
+            });
+        }
     }
 
     @Override

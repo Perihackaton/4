@@ -42,6 +42,15 @@ public class SharedManager {
         mContext=context;
     }
 
+    public void saveProfile(Profile profile){
+        setCity(profile.city);
+        setStreet(profile.street);
+        setHouse(profile.house);
+        setCorpse(profile.corpse);
+        setFio(profile.fio);
+        setFlat(profile.flat);
+    }
+
     public String getTOKEN() {
         return sharedPreferences.getString(TOKEN,null);
     }

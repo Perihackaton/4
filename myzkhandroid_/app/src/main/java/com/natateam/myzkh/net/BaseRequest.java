@@ -37,7 +37,6 @@ public abstract class BaseRequest extends Request<String> {
     public final static String TOKEN_NOT_FOUND="TOKEN_NOT_FOUND";
     public final static String TIME_OUT_ERROR="TIME_OUT_ERROR";
     public final static String SUCCES_REQUEST="SUCCES_REQUEST";
-    protected final static String API_KEY = "111";
     protected final static String SERVER_URL = "http://prj2.magic-egg.net/api/";
     private Map<String, String> mParams;
     private Map<String, String> mHeaders;
@@ -80,7 +79,7 @@ public abstract class BaseRequest extends Request<String> {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         mParams = new HashMap<String, String>();
         mHeaders= new HashMap<String,String>();
-        mGson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.PRIVATE).create();
+        mGson = new GsonBuilder().create();
         mApiMethod = apiMethod;
         mListener = listener;
     }
@@ -145,8 +144,6 @@ public abstract class BaseRequest extends Request<String> {
 
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
-        mParams.put("api_key", API_KEY);
-
         return mParams;
     }
 
@@ -154,7 +151,7 @@ public abstract class BaseRequest extends Request<String> {
     public String getUrl() {
         if (this.getMethod() == Method.GET) {
             try {
-                String url = super.getUrl() + "&";
+                String url = super.getUrl();
                 for (String key : getParams().keySet()) {
                     url = url + key + "=" + getParams().get(key) + "&";
                 }
