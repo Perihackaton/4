@@ -18,14 +18,14 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
     ];
     public $js = [
-        'js/scripts.js',
-        'https://api-maps.yandex.ru/2.1/?lang=ru_RU',
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+//        'frontend\assets\AppIEAsset',
+    ];
+
+    public $cssOptions = [
+        'media' => 'screen'
     ];
 }

@@ -21,21 +21,44 @@ class DefaultController extends Controller
 
     public function actionLogin()
     {
-        $model = new LoginForm();
+        if (\Yii::$app->request->isAjax) {
+            $phone = \Yii::$app->request->get('phone');
+            $pass = \Yii::$app->request->get('password');
 
-        if (\Yii::$app->user->isGuest) {
-            if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
-                if ($model->login()) {
-                    return $this->redirect('/');
+            $phone = str_replace(['(', ')', '-', '+'], "", $phone);
+            $phone = substr($phone, 2);
 
-                };
+            $model = new LoginForm();
+            $model->phone = $phone;
+            $model->password = $pass;
+
+            if ($model->login()) {
+                return $this->redirect('/');
+            } else {
+                return json_encode([
+                    'error' => true,
+                    'message' => 'Номер телефона или пароль введены неверно'
+                ]);
             }
 
-            return $this->render('login', [
-                'model' => $model,
-            ]);
         } else {
-            return $this->redirect('/');
+            $model = new LoginForm();
+
+            if (\Yii::$app->user->isGuest) {
+                if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
+                    if ($model->login()) {
+                        return $this->redirect('/');
+
+                    };
+                }
+
+                return $this->render('login', [
+                    'model' => $model,
+                ]);
+            } else {
+                return $this->redirect('/');
+
+            }
 
         }
     }

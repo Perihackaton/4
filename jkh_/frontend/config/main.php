@@ -9,9 +9,10 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'gii'],
+    'language' => 'ru',
     'controllerNamespace' => 'frontend\controllers',
     'defaultRoute' => 'main/default',
+    'bootstrap' => ['gii'],
     'modules' => [
         'gii' => [
             'class' => 'yii\gii\Module',
@@ -19,17 +20,26 @@ return [
         'main' => [
             'class' => 'frontend\modules\main\MainModule',
         ],
-        'object' => [
-            'class' => 'frontend\modules\object\ObjectModule'
-        ],
         'user' => [
             'class' => 'frontend\modules\user\UserModule'
         ]
         // ...
     ],
     'components' => [
+        'session' => [
+            'class' => 'yii\web\DbSession',
+            'sessionTable' => 'frontend_session',
+        ],
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@app/views' => '@app/themes/basic',
+                    '@app/modules' => '@app/themes/basic/modules', // <-- !!!
+                ],
+            ],
+        ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'common\modules\user\models\User',
             'enableAutoLogin' => true,
         ],
         'log' => [
@@ -41,20 +51,35 @@ return [
                 ],
             ],
         ],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'assetManager' => [
+            'basePath' => '@webroot/assets',
+            'baseUrl' => '@web/assets'
+        ],
+        'request' => [
+            'baseUrl' => '',
+            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+            'cookieValidationKey' => 'JF3XUBGsAp5wiP8LXC2mSwavcl5v4Pj3',
+        ],
         'urlManager' => [
+//            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'suffix' => '.html',
-            'rules'=>[
-                'show-info' => 'object/default/index',
-                'get-cat-items' => 'main/default/get-cat-items',
-                '<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>'=>'<module>/<controller>/<action>',
-                '<module:\w+>/<controller:\w+>/<action:\w+>'=>'<module>/<controller>/<action>',
-                '<module:\w+>/<action:\w+>'=>'<module>/default/<action>',
-            ]
+            'suffix' => '/',
+//            'rules'=>[
+
+//                '<module:(news|article)>/all' => '<module>/default/all',
+//                '<module:(news|article)>/<id_alt_title:\w+>' => '<module>/default/show',
+
+//                '<module:\w+>/<controller:\w+>/<action:\w+>'=>'<module>/<controller>/<action>',
+//                '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
+//                '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+//            ]
         ],
     ],
     'params' => $params,

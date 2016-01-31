@@ -1,5 +1,26 @@
-RewriteEngine on
+# Mod_Autoindex
+#<IfModule mod_autoindex.c>
+#Запрещаем просмотр содержимого папок
+#Options -Indexes
+#</IfModule>
 
+# Mod_Rewrite
+#<IfModule mod_rewrite.c>
+Options +FollowSymlinks
+# Включаем mod_rewrite
+RewriteEngine On
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI} !\..+$
+    RewriteCond %{REQUEST_URI} !/$
+    RewriteRule (.*) /$1/ [R=301,L]
+
+
+    RewriteRule (.+)\.html$ /$1/ [L,R=301]
+
+# Если это папка или файл, открываем её/его
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+# В противном случае перенаправляем на index.php
 RewriteRule . index.php
+#</IfModule>
